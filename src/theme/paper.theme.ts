@@ -1,6 +1,6 @@
-import { configureFonts } from 'react-native-paper'
-import customFont from '../../assets/fonts/font'
-const primary = {
+import { DefaultTheme, configureFonts } from 'react-native-paper'
+import { customFont} from '../../assets/fonts/font'
+export const primaryTheme = {
   dark: false,
   roundness: 4,
   colors: {
@@ -14,11 +14,8 @@ const primary = {
     placeholder: '#1481BA',
     backdrop: '#001021',
   },
-  fonts: configureFonts({config: customFont}),
+//   fonts: configureFonts({config: customFont}),
   animation: { scale: 1.0 },
 }
 
 
-export default {
-  primary,
-}
