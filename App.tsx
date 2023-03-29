@@ -14,16 +14,16 @@ export default function App() {
   return (
     <PaperProvider theme={primaryTheme}>
       <SafeAreaProvider>
-      <NavigationContainer>
-        <Stack.Navigator>
+      {/* <NavigationContainer>
+        <Stack.Navigator> */}
       
         <View style={styles.container}>
         <Text>Open up App.tsx to start working on your app!</Text>
         <StatusBar style="auto" />
       </View>
-        </Stack.Navigator>
+        {/* </Stack.Navigator>
 
-      </NavigationContainer>
+      </NavigationContainer> */}
       </SafeAreaProvider>
       </PaperProvider>
 
