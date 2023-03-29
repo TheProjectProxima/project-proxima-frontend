@@ -7,11 +7,11 @@ import { homeScreen } from '../screens/home.screen';
 
 const HomeStack = createNativeStackNavigator();
 
-export const RestaurantsNavigator = () => {
+export const HomeNavigator = () => {
   return (
     <HomeStack.Navigator>
       <HomeStack.Screen
-        name="Restaurants"
+        name="Home"
         component={homeScreen}
       />
     </HomeStack.Navigator>

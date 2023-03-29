@@ -33,6 +33,10 @@ const createScreenOptions = ({ route }) => {
   };
 };
 
+/*
+Think about adding a search screen later to the navigaotrs for friends and links
+*/
+
 export const AppNavigator = () => (
 //   <FavouritesContextProvider>
 //     <LocationContextProvider>
