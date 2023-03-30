@@ -8,6 +8,8 @@ import {
   NunitoSans_700Bold,
 } from '@expo-google-fonts/nunito-sans';
 import AppLoading from 'expo-app-loading';
+import { ThemeProvider } from 'styled-components/native';
+import { theme } from './src/theme';
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -19,11 +21,12 @@ export default function App() {
   }
   else {
     return (
-      <PaperProvider theme={primaryTheme}>
+      <ThemeProvider theme={theme}>
         <SafeAreaProvider>
           <PicLinkNavigation/>
         </SafeAreaProvider>
-        </PaperProvider>
+      </ThemeProvider>
+
   
   
     ); 
