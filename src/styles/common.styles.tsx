@@ -1,5 +1,3 @@
-
-
 import React from 'react';
 import { Image, View, Platform } from 'react-native';
 import { Card } from 'react-native-paper';
@@ -33,6 +31,8 @@ const StyledIcon = styled(Image)`
   width: 1.25em;
   height: 1.25em;
 `
+
+export {StyledCompactImage, StyledCompactCard, StyledImage, StyledCard, StyledIcon}
 
 
 
