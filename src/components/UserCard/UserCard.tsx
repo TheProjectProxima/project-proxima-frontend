@@ -3,11 +3,10 @@ import { View } from 'react-native';
 import { StyledCard, StyledCompactCard } from '../../styles/common.styles';
 import { GroupLink, UserAccount } from '../../types/types';
 
-const UserCard = (user : UserAccount) => {
+const UserCard = (user : UserAccount, last_linked: Date) => {
   const {
     user_name, 
-userDefaultProfileImage,
-
+    userDefaultProfileImage,
   } = user;
 
   // Will have to add friend functionality to this. 
@@ -19,6 +18,9 @@ userDefaultProfileImage,
         </View>
       <View>
         {user_name}
+      </View>
+      <View>
+        {last_linked.toDateString()}
       </View>
     </StyledCard>
   );

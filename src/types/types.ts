@@ -22,7 +22,6 @@ type UserAccount = {
     last_name: String,
     email: String,
     phone_number: String,
-    user_friends_ids: String[],
     password: String,
     created_at?: Date,
     updated_at?: Date,
