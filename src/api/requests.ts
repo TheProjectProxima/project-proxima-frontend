@@ -32,7 +32,7 @@ const handleErrors = (error : any) => {
 // add token to the backend as well???????
 // call token config once JWT and hashinga are added 
 const requests = {
-  del: (url : string) =>
+  delete: (url : string) =>
     axios
       .delete(`\${API_URI}\${url}`)
       .then((response) => response.data)

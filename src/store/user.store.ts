@@ -3,9 +3,9 @@ import {action, makeAutoObservable} from 'mobx';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import {AuthService} from '../services/index.service';
-import {ResponseUser} from '../services/Auth';
+import {ResponseUser} from '../lib/types/request';
 
-import {User} from '../lib/types/types';
+import {User} from '../lib/types/model';
 
 const cache = new Cache({
   namespace: 'proximaApp',
@@ -54,7 +54,7 @@ class Store {
     this.isLoading = true;
     this.error = undefined;
 
-    AuthService.get()
+    UserService.get()
       .then(
         action(({user}: ResponseUser) => {
           this.setUser(user);
@@ -71,7 +71,7 @@ class Store {
     this.isUpdating = true;
     this.error = undefined;
 
-    return AuthService.put(newUser)
+    return UserService.put(newUser)
       .then(
         action(({user}) => {
           this.user = user;
