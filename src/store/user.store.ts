@@ -2,10 +2,10 @@ import {Cache} from 'react-native-cache';
 import {action, makeAutoObservable} from 'mobx';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import {AuthService} from '../services';
+import {AuthService} from '../services/index.service';
 import {ResponseUser} from '../services/Auth';
 
-import {User} from '../lib/types';
+import {User} from '../lib/types/types';
 
 const cache = new Cache({
   namespace: 'proximaApp',

@@ -1,12 +1,11 @@
 export type User = {
+    // add token later for JWT 
     userId: String,
     email?: string,
-    token?: string,
     userName?: string,
     profileImage?: string,
     friendsWith?: User[],
     groups?: GroupLink[],
-
 }
 
 export type GroupLink = {
