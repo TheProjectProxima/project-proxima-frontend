@@ -1,9 +1,9 @@
 import {action, makeAutoObservable} from 'mobx';
 
 import {UserStore} from './index.store';
-import {AuthService} from '../services';
+import {AuthService} from '../services/index.service';
 
-import {ResponseErrors} from '../services/types';
+import {ResponseErrors} from '..';
 
 enum RequestType {
   login,
@@ -14,31 +14,49 @@ class Store {
   isLoading = false;
   errors?: ResponseErrors = undefined;
 
-  username = '';
-  email = '';
-  password = '';
+  userName = "";
+  email = "";
+  password = "";
+  phoneNumber = "";
+  firstName = "";
+  lastName = "";
 
   constructor() {
     makeAutoObservable(this);
   }
 
   clear() {
-    this.username = '';
+    this.userName = '';
     this.email = '';
     this.password = '';
+    this.phoneNumber = ""
+    this.firstName = ""
+    this.lastName = ""
     this.errors = undefined;
   }
 
-  get authValues() {
-    return {
-      username: this.username,
-      email: this.email,
-      password: this.password,
-    };
+  getAuthValues(type:  RequestType) {
+    if (type == RequestType.login) {
+      // For login
+      return {
+        userName: this.userName,
+        password: this.password,
+      };
+    } else {
+      // For sign up
+      return {
+        userName: this.userName,
+        email: this.email,
+        password: this.password,
+        phoneNumber: this.phoneNumber,
+        firstName: this.firstName,
+        lastName: this.lastName,
+      };
+    }
   }
 
   setUsername(username: string) {
-    this.username = username;
+    this.userName = username;
   }
 
   setEmail(email: string) {
@@ -49,14 +67,26 @@ class Store {
     this.password = password;
   }
 
+  setPhoneNumber(phoneNumber: string) {
+    this.phoneNumber = phoneNumber;
+  }
+
+  setFirstName(firstName: string) {
+    this.firstName = firstName;
+  }
+
+  setLastName(lastName: string) {
+    this.lastName = lastName;
+  }
+
   $request(type: RequestType) {
     this.isLoading = true;
     this.errors = undefined;
 
     const api =
-      type === RequestType.login ? AuthService.login : AuthService.register;
+      type === RequestType.login ? AuthService.login : AuthService.signup;
 
-    api(this.authValues)
+    api(this.getAuthValues(type))
       .then(
         action(({user}) => {
           UserStore.setUser(user);
