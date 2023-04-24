@@ -1,6 +1,6 @@
 export type User = {
     // add token later for JWT 
-    userId: String,
+    userId: string,
     email?: string,
     userName?: string,
     profileImage?: string,

@@ -1,6 +1,6 @@
 import {action, makeAutoObservable} from 'mobx';
 
-import {UserStore} from './index.store';
+import {AuthStore, UserStore} from './index.store';
 import {AuthService} from '../services/index.service';
 
 import { AuthUser } from '../lib/types/service';

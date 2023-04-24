@@ -2,7 +2,7 @@ import {Cache} from 'react-native-cache';
 import {action, makeAutoObservable} from 'mobx';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import {AuthService} from '../services/index.service';
+import {AuthService, UserService} from '../services/index.service';
 import {ResponseUser} from '../lib/types/request';
 
 import {User} from '../lib/types/model';
@@ -54,24 +54,29 @@ class Store {
     this.isLoading = true;
     this.error = undefined;
 
-    UserService.get()
-      .then(
-        action(({user}: ResponseUser) => {
-          this.setUser(user);
-        })
-      )
-      .finally(
-        action(() => {
-          this.isLoading = false;
-        })
-      );
+    if (this.user) {
+        UserService.getUser(this.user.userId)
+        .then(
+            action(() => {
+                this.setUser(this.user);
+            })
+        )
+        // might have to safe guard against errors here 
+        .finally(
+          action(() => {
+            this.isLoading = false;
+          })
+        );
+    }
+
+    
   }
 
-  updateUser(newUser: User) {
+  updateUser(userUuid: string, newUser: User) {
     this.isUpdating = true;
     this.error = undefined;
 
-    return UserService.put(newUser)
+    return UserService.updateUser(userUuid, newUser)
       .then(
         action(({user}) => {
           this.user = user;

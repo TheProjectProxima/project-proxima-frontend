@@ -10,5 +10,5 @@ export default {
   updateUser: (uuid: string, updatedUser: User): Promise<ResponseUser> =>
     requests.put(`/users/${uuid}`, { user: updatedUser }),
   deleteUser: (uuid: string): Promise<void> =>
-    requests.delete(`/users/${id}`)
+    requests.delete(`/users/${uuid}`)
 };
