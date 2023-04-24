@@ -3,7 +3,7 @@ import {action, makeAutoObservable} from 'mobx';
 import {UserStore} from './index.store';
 import {AuthService} from '../services/index.service';
 
-import {ResponseErrors} from '..';
+import { AuthUser } from '../lib/types/service';
 
 enum RequestType {
   login,
@@ -12,7 +12,8 @@ enum RequestType {
 
 class Store {
   isLoading = false;
-  errors?: ResponseErrors = undefined;
+  // add type for errors later 
+  errors? =  undefined;
 
   userName = "";
   email = "";
@@ -35,7 +36,7 @@ class Store {
     this.errors = undefined;
   }
 
-  getAuthValues(type:  RequestType) {
+  getAuthValues(type:  RequestType) : AuthUser {
     if (type == RequestType.login) {
       // For login
       return {

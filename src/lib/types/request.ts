@@ -7,11 +7,11 @@ export type LoginUser = {
   
   export type SignUpUser = {
     userName: string,
-    firstName: string,
-    lastName: string, 
-    email: string,
+    firstName?: string,
+    lastName?: string, 
+    email?: string,
     password: string,
-    phoneNumber: string, 
+    phoneNumber?: string, 
   };
   
   export type ResponseUser = {
