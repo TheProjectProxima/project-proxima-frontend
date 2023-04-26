@@ -1,9 +1,9 @@
 import React, { memo, useState } from 'react';
 import { TouchableOpacity, StyleSheet, Text, View } from 'react-native';
-import Background from '../components/Background/Background';
+// import Background from '../components/Background/Background';
 import Button from '../components/Button/Button';
 import TextInput from '../components/TextInput/TextInput';
-import BackButton from '../components/BackButton/BackButton';
+// import BackButton from '../components/BackButton/BackButton';
 import { theme } from '../theme';
 //import { Navigation } from '../types';
 
@@ -11,7 +11,7 @@ import { theme } from '../theme';
 //   navigation: Navigation;
 // };
 
-const LoginScreen = ({ navigation }:{navigation:any}) => {
+export const LoginScreen = ({ navigation }:{navigation:any}) => {
   const [email, setEmail] = useState({ value: '', error: '' });
   const [password, setPassword] = useState({ value: '', error: '' });
 
@@ -53,8 +53,8 @@ const LoginScreen = ({ navigation }:{navigation:any}) => {
 };
 
   return (
-    <Background>
-      <BackButton goBack={() => navigation.navigate('HomeScreen')} />
+    <View>
+      {/* <BackButton goBack={() => navigation.navigate('HomeScreen')} /> */}
 
       <TextInput
         label="Email"
@@ -96,7 +96,7 @@ const LoginScreen = ({ navigation }:{navigation:any}) => {
           <Text style={styles.link}>Sign up</Text>
         </TouchableOpacity>
       </View>
-    </Background>
+    </View>
   );
 };
 
@@ -119,4 +119,3 @@ const styles = StyleSheet.create({
   },
 });
 
-export default memo(LoginScreen);
