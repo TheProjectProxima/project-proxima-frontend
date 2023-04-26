@@ -92,7 +92,7 @@ export const LoginScreen = ({ navigation }:{navigation:any}) => {
 
       <View style={styles.row}>
         <Text style={styles.label}>Don’t have an account? </Text>
-        <TouchableOpacity onPress={() => navigation.navigate('RegisterScreen')}>
+        <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>
           <Text style={styles.link}>Sign up</Text>
         </TouchableOpacity>
       </View>

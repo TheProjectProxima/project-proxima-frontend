@@ -1,72 +1,123 @@
-// import React, { useState, useContext } from 'react';
-// import { ActivityIndicator } from 'react-native-paper';
-// i
+import React, { memo, useState } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+// import Background from '../components/Background';
+import Button from '../../components/Button/Button';
+import TextInput from '../../components/TextInput/TextInput';
+// import BackButton from '../components/BackButton';
+import { theme } from '../../theme';
+//import { Navigation } from '../types';
 
 
-
-// export const RegisterScreen = ({ navigation :  }) => {
-//   const [email, setEmail] = useState('');
-//   const [password, setPassword] = useState('');
-//   const [repeatedPassword, setRepeatedPassword] = useState('');
-//   const { onRegister, isLoading, error } = useContext(AuthenticationContext);
-
-//   return (
-//     <AccountBackground>
-//       <AccountCover />
-//       <Title variant="caption">YumMeals</Title>
-//       <AccountContainer>
-//         <AuthInput
-//           label="E-mail"
-//           value={email}
-//           textContentType="emailAddress"
-//           keyboardType="email-address"
-//           autoCapitalize="none"
-//           onChangeText={(userEmail) => setEmail(userEmail)}
-//         />
-//         <Spacer size="large">
-//           <AuthInput
-//             label="Password"
-//             value={password}
-//             textContentType="password"
-//             secureTextEntry
-//             autoCapitalize="none"
-//             onChangeText={(userPass) => setPassword(userPass)}
-//           />
-//         </Spacer>
-//         <Spacer size="large">
-//           <AuthInput
-//             label="Repeat Password"
-//             value={repeatedPassword}
-//             textContentType="password"
-//             secureTextEntry
-//             autoCapitalize="none"
-//             onChangeText={(userPass) => setRepeatedPassword(userPass)}
-//           />
-//         </Spacer>
-//         {error && (
-//           <ErrorContainer size="large">
-//             <Text variant="error">{error}</Text>
-//           </ErrorContainer>
-//         )}
-//         <Spacer size="large">
-//           {!isLoading ? (
-//             <AuthButton
-//               icon="email"
-//               mode="contained"
-//               onPress={() => onRegister(email, password, repeatedPassword)}
-//             >
-//               Register
-//             </AuthButton>
-//           ) : (
-//             <ActivityIndicator animating={true} color={Colors.blue300} />
-//           )}
-//         </Spacer>
-//       </AccountContainer>
-//       <Spacer size="large">
-//         <AuthButton mode="contained" onPress={() => navigation.goBack()}>
-//           Back
-//         </AuthButton>
-//       </Spacer>
-//     </AccountBackground>
-//   );
+// type Props = {
+//   navigation: Navigation;
 // };
+
+export const SignUpScreen = ({ navigation }: {navigation:any}) => {
+  const [name, setName] = useState({ value: '', error: '' });
+  const [email, setEmail] = useState({ value: '', error: '' });
+  const [password, setPassword] = useState({ value: '', error: '' });
+
+  const _onSignUpPressed = () => {
+    const nameError = nameValidator(name.value);
+    const emailError = emailValidator(email.value);
+    const passwordError = passwordValidator(password.value);
+
+    if (emailError || passwordError || nameError) {
+      setName({ ...name, error: nameError });
+      setEmail({ ...email, error: emailError });
+      setPassword({ ...password, error: passwordError });
+      return;
+    }
+
+    navigation.navigate('Dashboard');
+  };
+
+  const emailValidator = (email: string) => {
+    const re = /\S+@\S+\.\S+/;
+  
+    if (!email || email.length <= 0) return 'Email cannot be empty.';
+    if (!re.test(email)) return 'Ooops! We need a valid email address.';
+  
+    return '';
+  };
+  
+   const passwordValidator = (password: string) => {
+    if (!password || password.length <= 0) return 'Password cannot be empty.';
+  
+    return '';
+  };
+  
+   const nameValidator = (name: string) => {
+    if (!name || name.length <= 0) return 'Name cannot be empty.';
+  
+    return '';
+  };
+
+  return (
+    <View>
+      {/* <BackButton goBack={() => navigation.navigate('HomeScreen')} /> */}
+
+      <TextInput
+        label="Name"
+        returnKeyType="next"
+        value={name.value}
+        onChangeText={text => setName({ value: text, error: '' })}
+        error={!!name.error}
+        errorText={name.error}
+      />
+
+      <TextInput
+        label="Email"
+        returnKeyType="next"
+        value={email.value}
+        onChangeText={text => setEmail({ value: text, error: '' })}
+        error={!!email.error}
+        errorText={email.error}
+        autoCapitalize="none"
+        //autoCompleteType="email"
+        textContentType="emailAddress"
+        keyboardType="email-address"
+      />
+
+      <TextInput
+        label="Password"
+        returnKeyType="done"
+        value={password.value}
+        onChangeText={text => setPassword({ value: text, error: '' })}
+        error={!!password.error}
+        errorText={password.error}
+        secureTextEntry
+      />
+
+      <Button mode="contained" onPress={_onSignUpPressed} style={styles.button}>
+        Sign Up
+      </Button>
+
+      <View style={styles.row}>
+        <Text style={styles.label}>Already have an account? </Text>
+        <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+          <Text style={styles.link}>Login</Text>
+        </TouchableOpacity>
+      </View>
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  label: {
+    color: theme.colors.ui.secondary,
+  },
+  button: {
+    marginTop: 24,
+  },
+  row: {
+    flexDirection: 'row',
+    marginTop: 4,
+  },
+  link: {
+    fontWeight: 'bold',
+    color: theme.colors.text.primary,
+  },
+});
+
+//export default memo(RegisterScreen);
