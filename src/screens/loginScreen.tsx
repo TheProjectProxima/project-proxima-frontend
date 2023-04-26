@@ -1,20 +1,17 @@
 import React, { memo, useState } from 'react';
 import { TouchableOpacity, StyleSheet, Text, View } from 'react-native';
-import Background from '../components/Background';
-import Logo from '../components/Logo';
-import Header from '../components/Header';
-import Button from '../components/Button';
-import TextInput from '../components/TextInput';
-import BackButton from '../components/BackButton';
+import Background from '../components/Background/Background';
+import Button from '../components/Button/Button';
+import TextInput from '../components/TextInput/TextInput';
+import BackButton from '../components/BackButton/BackButton';
 import { theme } from '../theme';
-import { emailValidator, passwordValidator } from '../core/utils';
-import { Navigation } from '../types';
+//import { Navigation } from '../types';
 
-type Props = {
-  navigation: Navigation;
-};
+// type Props = {
+//   navigation: Navigation;
+// };
 
-const LoginScreen = ({ navigation }: Props) => {
+const LoginScreen = ({ navigation }:{navigation:any}) => {
   const [email, setEmail] = useState({ value: '', error: '' });
   const [password, setPassword] = useState({ value: '', error: '' });
 
@@ -31,23 +28,42 @@ const LoginScreen = ({ navigation }: Props) => {
     navigation.navigate('Dashboard');
   };
 
+
+ 
+
+ const emailValidator = (email: string) => {
+  const re = /\S+@\S+\.\S+/;
+
+  if (!email || email.length <= 0) return 'Email cannot be empty.';
+  if (!re.test(email)) return 'Ooops! We need a valid email address.';
+
+  return '';
+};
+
+ const passwordValidator = (password: string) => {
+  if (!password || password.length <= 0) return 'Password cannot be empty.';
+
+  return '';
+};
+
+ const nameValidator = (name: string) => {
+  if (!name || name.length <= 0) return 'Name cannot be empty.';
+
+  return '';
+};
+
   return (
     <Background>
       <BackButton goBack={() => navigation.navigate('HomeScreen')} />
-
-      <Logo />
-
-      <Header>Welcome back.</Header>
 
       <TextInput
         label="Email"
         returnKeyType="next"
         value={email.value}
-        onChangeText={text => setEmail({ value: text, error: '' })}
+        onChangeText={(text:string) => setEmail({ value: text, error: '' })}
         error={!!email.error}
         errorText={email.error}
         autoCapitalize="none"
-        autoCompleteType="email"
         textContentType="emailAddress"
         keyboardType="email-address"
       />
@@ -56,7 +72,7 @@ const LoginScreen = ({ navigation }: Props) => {
         label="Password"
         returnKeyType="done"
         value={password.value}
-        onChangeText={text => setPassword({ value: text, error: '' })}
+        onChangeText={(text:string) => setPassword({ value: text, error: '' })}
         error={!!password.error}
         errorText={password.error}
         secureTextEntry
@@ -95,11 +111,11 @@ const styles = StyleSheet.create({
     marginTop: 4,
   },
   label: {
-    color: theme.colors.secondary,
+    color: theme.colors.ui.secondary,
   },
   link: {
     fontWeight: 'bold',
-    color: theme.colors.primary,
+    color: theme.colors.text.primary,
   },
 });
 
