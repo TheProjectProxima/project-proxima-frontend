@@ -1,10 +1,10 @@
 import React, { memo, useState } from 'react';
 import { TouchableOpacity, StyleSheet, Text, View } from 'react-native';
 // import Background from '../components/Background/Background';
-import Button from '../components/Button/Button';
-import TextInput from '../components/TextInput/TextInput';
+import Button from '../../components/Button/Button';
+import TextInput from '../../components/TextInput/TextInput';
 // import BackButton from '../components/BackButton/BackButton';
-import { theme } from '../theme';
+import { theme } from '../../theme';
 //import { Navigation } from '../types';
 
 // type Props = {
