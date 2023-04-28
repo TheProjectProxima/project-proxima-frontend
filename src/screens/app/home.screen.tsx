@@ -7,7 +7,7 @@ export const HomeScreen = ({ navigation }: {navigation:any}) => {
 
   return (
     <View>
-        <Text>Active link</Text>
+        <Text>Home Screen</Text>
     </View>
   );
 };
