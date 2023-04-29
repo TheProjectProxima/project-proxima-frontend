@@ -3,11 +3,11 @@ import { View, Text,} from 'react-native';
 
 
 
-export const ActiveLinkScreen = ({ navigation }: {navigation:any}) => {
+export const UploadedByScreen = ({ navigation }: {navigation:any}) => {
 
   return (
     <View>
-        <Text>Active link</Text>
+        <Text>Uploaded by</Text>
     </View>
   );
 };

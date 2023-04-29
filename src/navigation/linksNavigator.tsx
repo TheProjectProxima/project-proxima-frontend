@@ -2,9 +2,9 @@ import React from 'react';
 import {
   createNativeStackNavigator,
 } from '@react-navigation/native-stack';
+import { ActiveLinkScreen } from '../screens/app/link/activeLink.screen';
+import { LinksScreen } from '../screens/app/link/links.screen';
 
-import { LinksScreen } from '../screens/app/links.screen';
-import {ActiveLinkScreen} from '../screens/app/activeLink.screen'
 
 const LinksStack = createNativeStackNavigator();
 
@@ -17,7 +17,7 @@ export const LinksNavigator = () => {
       />
         <LinksStack.Screen
         name="Active Link"
-        component={ActiveLinkScreen}
+        component={ActiveLinkScreen({navigation: LinksStack, linkName : "Test", noPics : 250, timeLeft:"2 hours left"})}
       />
     </LinksStack.Navigator>
   );
