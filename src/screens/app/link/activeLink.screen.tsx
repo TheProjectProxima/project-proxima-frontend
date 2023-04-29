@@ -4,25 +4,25 @@ import { ActiveLinkNavigator } from '../../../navigation/activeLinkNavigator';
 
 
 
-export const ActiveLinkScreen = ({ navigation, linkName, noPics, timeLeft}: {navigation:any, linkName : string, noPics : number, timeLeft:string}) => {
-    const [isActive, setIsActive] = useState(true)
+export const ActiveLinkScreen = ({ navigation}: {navigation:any}) => {
+    const [isActive, setIsActive] = useState(false)
 
 
     if (isActive) {
         // need to add image dsiplay 
         return(
             <View>
-                <Text>{linkName}</Text>
+                <Text>{"Test Link"}</Text>
                 {}
-                <Text>{`${noPics} Pics`}</Text>
-                <Text>{timeLeft}</Text>
+                <Text>{`173 Pics`}</Text>
+                <Text>{'24 hours left'}</Text>
             </View>
         )
     }
     else {
         return(
             <View>
-                <Text>{linkName}</Text>
+                <Text>{"Test Link"}</Text>
                 <ActiveLinkNavigator/>
             </View>
 
