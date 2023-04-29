@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { AccountNavigator } from './accountNavigator';
+import { AppNavigator } from './appNavigator';
 
 // import { AppNavigator } from './appNavigator';
 
@@ -10,7 +11,8 @@ export const PicLinkNavigation = () => {
 
   return (
     <NavigationContainer>
-     <AccountNavigator/> 
+      <AccountNavigator/> 
+      <AppNavigator/>
     </NavigationContainer>
   );
 }

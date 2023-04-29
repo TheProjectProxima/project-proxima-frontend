@@ -25,7 +25,7 @@ export const LoginScreen = ({ navigation }:{navigation:any}) => {
       return;
     }
 
-    navigation.navigate('Dashboard');
+    navigation.navigate('AppNavigator');
   };
 
 
