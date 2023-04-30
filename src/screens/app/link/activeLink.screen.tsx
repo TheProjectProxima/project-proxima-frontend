@@ -9,11 +9,10 @@ export const ActiveLinkScreen = ({ navigation}: {navigation:any}) => {
 
 
     if (isActive) {
-        // need to add image dsiplay 
+        // need to add image display 
         return(
             <View>
                 <Text>{"Test Link"}</Text>
-                {}
                 <Text>{`173 Pics`}</Text>
                 <Text>{'24 hours left'}</Text>
             </View>
@@ -21,8 +20,8 @@ export const ActiveLinkScreen = ({ navigation}: {navigation:any}) => {
     }
     else {
         return(
-            <View>
-                <Text>{"Test Link"}</Text>
+            <View style={{flex: 1}}>
+                <Text>{"Test "}</Text>
                 <ActiveLinkNavigator/>
             </View>
 

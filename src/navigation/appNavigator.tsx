@@ -45,9 +45,9 @@ export const AppNavigator = () => (
           <Tab.Navigator
             // screenOptions={createScreenOptions}
           >
-            <Tab.Screen name="Home" component={HomeNavigator} />
-            <Tab.Screen name="Links" component={LinksNavigator} />
-            <Tab.Screen name="Friends" component={FriendsNavigator} />
-            <Tab.Screen name="User" component={UserProfileNavigator} />
+            <Tab.Screen name="Home Tab" component={HomeNavigator} />
+            <Tab.Screen name="Links Tab" component={LinksNavigator} />
+            <Tab.Screen name="Friends Tab" component={FriendsNavigator} />
+            <Tab.Screen name="User Tab" component={UserProfileNavigator} />
           </Tab.Navigator>
 );
