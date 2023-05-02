@@ -50,4 +50,5 @@ export const AppNavigator = () => (
             <Tab.Screen name="Friends Tab" component={FriendsNavigator} />
             <Tab.Screen name="User Tab" component={UserProfileNavigator} />
           </Tab.Navigator>
+
 );
