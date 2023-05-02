@@ -27,10 +27,10 @@ type UserAccount = {
     updated_at?: Date,
     deleted_at?: Date,
     is_active: Boolean,
-    userDefaultProfileImage: Image
+    userDefaultProfileImage?: Image
     groups: GroupLink[]
-    user_assigned_images: Image[]
-    users_profile_images: ProfileImage[]
+    user_assigned_images?: Image[]
+    users_profile_images?: ProfileImage[]
 
 }
 
