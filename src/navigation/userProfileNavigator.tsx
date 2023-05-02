@@ -13,6 +13,10 @@ export const UserProfileNavigator = () => {
         name="User"
         component={UserProfileScreen}
       />
+      <UserStack.Screen 
+        name="Settings"
+        component={settingsScreen}
+      />
     </UserStack.Navigator>
   );
 };
