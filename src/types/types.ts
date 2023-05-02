@@ -1,11 +1,11 @@
 type GroupLink = {
-    groupId: String,
-    name: String,
-    saved: Boolean
+    groupId: string,
+    name: string,
+    saved: boolean
     participants_num: BigInt,
     active: Boolean,
-    group_image_ids: String[],
-    group_user_ids: String[],
+    group_image_ids: string[],
+    group_user_ids: string[],
     created_at: Date,
     updated_at: Date,
     ended_at: Date,
@@ -16,45 +16,45 @@ type GroupLink = {
 }
 
 type UserAccount = {
-    user_id: String,
-    user_name: String,
-    first_name: String,
-    last_name: String,
-    email: String,
-    phone_number: String,
-    password: String,
+    user_id: string,
+    user_name: string,
+    first_name: string,
+    last_name: string,
+    email: string,
+    phone_number: string,
+    password: string,
     created_at?: Date,
     updated_at?: Date,
     deleted_at?: Date,
     is_active: Boolean,
-    userDefaultProfileImage: Image
+    userDefaultProfileImage?: Image
     groups: GroupLink[]
-    user_assigned_images: Image[]
-    users_profile_images: ProfileImage[]
+    user_assigned_images?: Image[]
+    users_profile_images?: ProfileImage[]
 
 }
 
 type Image = {
-    image_id: String
-    src_link: String
+    image_id: string
+    src_link: string
     created_at?: Date
-    uploaded_by: String
+    uploaded_by: string
     group_links: GroupLink
-    group_linksId: String,
+    group_linksId: string,
     image_assigned_users: ImagesOnUsers[]
 }
 
 type ProfileImage = {
-    profile_image_id: String,
-    src_link: String,
+    profile_image_id: string,
+    src_link: string,
     user_account: UserAccount,
-    user_accountUser_id: String,
+    user_accountUser_id: string,
 }
 
 
 type UsersOnGroups = {
-    user_id: String,
-    group_id: String,
+    user_id: string,
+    group_id: string,
     active: Boolean,
     group_links: GroupLink,
     user_account: UserAccount,
@@ -63,9 +63,9 @@ type UsersOnGroups = {
 
 type ImagesOnUsers = {
     image: Image,
-    imageId: String,
+    imageId: string,
     userAccount: UserAccount,
-    userId: String,
+    userId: string,
 }
 
 export {
