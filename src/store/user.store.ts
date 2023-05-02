@@ -100,6 +100,8 @@ class Store {
       );
   }
 
+  getUser
+
   forgetUser() {
     this.setUser(undefined);
   }
