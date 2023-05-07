@@ -3,15 +3,18 @@ import { GroupLink } from '../lib/types/model';
 import { LoginUser, ResponseGroupLink, ResponseUser, SignUpUser } from '../lib/types/request';
 
 export default {
-    getUser: (uuid: string): Promise<GroupLink> =>
+    getGroupLink: (uuid: string): Promise<GroupLink> =>
     requests.get(`/group-link/${uuid}`),
-
   updateGroupLink: (uuid: string, updatedGroupLink: GroupLink): Promise<GroupLink> =>
     requests.put(`/group-link/${uuid}`, { groupLink: updatedGroupLink }),
-  leaveGroupLinkUser: (uuid: string): Promise<void> =>
-    requests.delete(`/uusers/group-links/${uuid}`),
+  deleteGroupLinkUser: (uuid: string): Promise<void> =>
+    requests.delete(`/users/group-links/${uuid}`),
+   deleteGroupLink: (uuid: string) : Promise<void> => 
+   requests.delete(`/group-link/${uuid}`), 
   createGroupLink: (newGroupLink: GroupLink) : Promise<ResponseGroupLink> => 
-    requests.post("/group-link/", {newGroupLink})
+    requests.post("/group-link/", {newGroupLink}),
+    getUserLinks: (uuid: string): Promise<GroupLink[]> =>
+    requests.get(`/users/${uuid}/group-links/`),
 };
 
 
