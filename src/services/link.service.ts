@@ -5,12 +5,15 @@ import { LoginUser, ResponseGroupLink, ResponseUser, SignUpUser } from '../lib/t
 export default {
     getUser: (uuid: string): Promise<GroupLink> =>
     requests.get(`/group-link/${uuid}`),
-  getAllGroupLinksUser: (): Promise<GroupLink[]> =>
-    requests.get('/users/group-links/'),
+
   updateGroupLink: (uuid: string, updatedGroupLink: GroupLink): Promise<GroupLink> =>
     requests.put(`/group-link/${uuid}`, { groupLink: updatedGroupLink }),
-  deleteGroupLinkUser: (uuid: string): Promise<void> =>
+  leaveGroupLinkUser: (uuid: string): Promise<void> =>
     requests.delete(`/uusers/group-links/${uuid}`),
   createGroupLink: (newGroupLink: GroupLink) : Promise<ResponseGroupLink> => 
     requests.post("/group-link/", {newGroupLink})
 };
+
+
+// need aability to completely delet a group link -- showul only the owner do this 
+// does this mean we need an owner for a group link 

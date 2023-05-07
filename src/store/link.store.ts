@@ -1,34 +1,16 @@
 import {action, computed, makeAutoObservable, observable} from 'mobx';
-import { GroupLink } from '../types/types';
+import { GroupLink, Image } from '../types/types';
 
 
 class Store {
-  isLoading = true;
-  groupLinksMap: Map<string, GroupLink> = observable.map();
-  slug?: string = undefined;
-  error?: string = undefined;
+  groupLinksMap: Map<string, GroupLink> = new Map()
 
   constructor() {
     makeAutoObservable(this);
   }
 
-  @computed get comments() {
-    return [...this.commentsMap.values()];
-  }
-
-  $clear(slug: string) {
-    if (slug === this.slug) return;
-    this.slug = slug;
-
-    this.groupLinksMap.clear();
-    this.isLoading = true;
-    this.error = undefined;
-  }
-
-  $updateGroupLinksMap(groupLinks: GroupLink[]) {
-    groupLinks.forEach((groupLink) =>
-      this.groupLinksMap.set(groupLink.groupId, groupLink)
-    );
+  @computed get getAllLinks() {
+    return [...this.groupLinksMap.values()];
   }
 
   loadComments(slug: string) {
@@ -53,9 +35,7 @@ class Store {
       );
   }
 
-  createComment(comment: string) {
-    if (!this.slug) return;
-
+  createLink(link: GroupLink) {
     return CommentsService.create(this.slug, {body: comment})
       .then(
         action(({comment}) => {

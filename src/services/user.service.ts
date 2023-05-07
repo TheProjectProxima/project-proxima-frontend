@@ -10,5 +10,7 @@ export default {
   updateUser: (uuid: string, updatedUser: User): Promise<ResponseUser> =>
     requests.put(`/users/${uuid}`, { user: updatedUser }),
   deleteUser: (uuid: string): Promise<void> =>
-    requests.delete(`/users/${uuid}`)
+    requests.delete(`/users/${uuid}`),
+    getAllGroupLinksUser: (uuid: string): Promise<GroupLink[]> =>
+    requests.get(`/users/${uuid}/group-links/`),
 };
