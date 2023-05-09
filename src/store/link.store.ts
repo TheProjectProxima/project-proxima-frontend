@@ -1,19 +1,44 @@
 import {action, computed, makeAutoObservable, observable} from 'mobx';
-import { GroupLink, Image } from '../types/types';
+import { Image } from '../types/types';
 import { RootStore } from './index.store';
+import linkService from '../services/link.service';
+import { UserStore } from './user.store';
+import { GroupLink } from '../lib/types/model';
+import GroupCard from '../components/GroupCard/GroupCard';
 
 
 export class LinkStore {
   rootStore: RootStore
   groupLinksMap: Map<string, GroupLink> = new Map()
+  isLoadingLink: boolean
+  linkError : string | undefined
 
   constructor(rootStore: RootStore) {
-    this.rootStore = rootStore;
-    makeAutoObservable(this);
+    this.rootStore = rootStore
+    this.isLoadingLink = false
+    this.linkError = undefined
+    makeAutoObservable(this)
   }
 
-  @computed get getAllLinks() {
+  @computed get allLinksInMap() {
     return [...this.groupLinksMap.values()];
+  }
+  loadUserLinks() {
+    this.isLoadingLink = true;
+    this.linkError = undefined;
+    return linkService.getUserLinks(this.rootStore.userStore.user.userId)
+      .then(action(
+        (links: GroupLink[]) => {
+          links.forEach((link: GroupLink) => {
+            this.groupLinksMap.set(link.groupId, link)
+          })
+        }
+      ))
+      .catch(action((err: any) => {
+        this.linkError = err.response && err.response.body && err.response.body.errors;
+        throw err;
+      }))
+      .finally(action(() => { this.isLoadingLink = false; }));
   }
 
   

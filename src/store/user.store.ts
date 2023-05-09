@@ -20,11 +20,19 @@ export class UserStore {
   isLoading = true;
   isUpdating = false;
   error?: string = undefined;
-  user?: User = undefined;
+  user: User
   rootStore: RootStore
 
   constructor(rootStore: RootStore) {
     this.rootStore = rootStore;
+    this.user = {
+      userId: '',
+      email: '',
+      userName: '',
+      profileImage: [],
+      friendsWith: [],
+      groups: []
+    }
     makeAutoObservable(this);
   }
 
@@ -46,7 +54,7 @@ export class UserStore {
     }
   }
 
-  setUser(user?: User) {
+  setUser(user: User) {
     this.user = user;
     this.error = undefined;
     this.$updateStorage(user);
@@ -104,6 +112,13 @@ export class UserStore {
 
   
   forgetUser() {
-    this.setUser(undefined);
+    this.setUser({
+      userId: '',
+      email: '',
+      userName: '',
+      profileImage: [],
+      friendsWith: [],
+      groups: []
+    });
   }
 }
