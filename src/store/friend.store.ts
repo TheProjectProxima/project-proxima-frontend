@@ -6,14 +6,17 @@ import {AuthService, UserService} from '../services/index.service';
 import {ResponseUser} from '../lib/types/request';
 
 import {Friend} from '../types/types';
+import { RootStore } from './index.store';
 
-class Store {
+export class FriendStore {
+  rootStore: RootStore
   isLoading = true;
   isUpdating = false;
   error?: string = undefined;
   friendsMap: Map<string, Friend> = new Map();
 
-  constructor() {
+  constructor(rootStore: RootStore) {
+    this.rootStore = rootStore;
     makeAutoObservable(this);
   }
 
@@ -73,4 +76,3 @@ class Store {
   }
 }
 
-export default new Store();

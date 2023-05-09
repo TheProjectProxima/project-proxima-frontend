@@ -2,10 +2,10 @@ import {Cache} from 'react-native-cache';
 import {action, makeAutoObservable} from 'mobx';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import {AuthService, UserService} from '../services/index.service';
-import {ResponseUser} from '../lib/types/request';
+import {UserService} from '../services/index.service';
 
 import {User} from '../lib/types/model';
+import { RootStore } from './index.store';
 
 const cache = new Cache({
   namespace: 'proximaApp',
@@ -16,13 +16,15 @@ const cache = new Cache({
   backend: AsyncStorage,
 });
 
-class Store {
+export class UserStore {
   isLoading = true;
   isUpdating = false;
   error?: string = undefined;
   user?: User = undefined;
+  rootStore: RootStore
 
-  constructor() {
+  constructor(rootStore: RootStore) {
+    this.rootStore = rootStore;
     makeAutoObservable(this);
   }
 
@@ -105,5 +107,3 @@ class Store {
     this.setUser(undefined);
   }
 }
-
-export default new Store();
