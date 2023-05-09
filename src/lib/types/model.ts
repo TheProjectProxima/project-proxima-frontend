@@ -29,3 +29,16 @@ export type ProfileImage = {
     profileImageId: string, 
     user? : User
 }
+
+export type Friend = {
+    user: User,
+    userId: string,
+    friend: User,
+    friendId: string,
+    uniqueId: string,
+    requested: Boolean,
+    accepted: Boolean,
+    requested_at?: Date,
+    last_linked: Date,
+    deleted_at: Date
+  }

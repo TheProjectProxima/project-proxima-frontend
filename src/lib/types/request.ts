@@ -1,4 +1,4 @@
-import { GroupLink } from "../../types/types";
+import { Friend, GroupLink } from "../../types/types";
 import { User } from "./model";
 
 export type LoginUser = {
@@ -22,3 +22,7 @@ export type LoginUser = {
   export type ResponseGroupLink = {
     groupLink: GroupLink;
   };
+
+  export type ResponseFriend = {
+    friend: Friend;
+  }
