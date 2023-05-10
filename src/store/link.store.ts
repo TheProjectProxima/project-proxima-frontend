@@ -23,7 +23,8 @@ export class LinkStore {
   @computed get allLinksInMap() {
     return [...this.groupLinksMap.values()];
   }
-  loadUserLinks() {
+
+  fetchUserLinks() {
     this.isLoadingLink = true;
     this.linkError = undefined;
     return linkService.getUserLinks(this.rootStore.userStore.user.userId)
@@ -41,8 +42,58 @@ export class LinkStore {
       .finally(action(() => { this.isLoadingLink = false; }));
   }
 
-  
+  loadLink(linkId: string) {
+    return this.groupLinksMap.get(linkId)
+  }
 
+  updateLink(linkId: string, newLink : GroupLink) {
+    this.isLoadingLink = true
+    this.linkError = undefined
+    return linkService.updateGroupLink(linkId, newLink).then (
+      action( () => {
+        this.groupLinksMap.set(linkId, newLink)
+      }
+      )
+    )
+    .catch(action((err: any) => {
+      this.linkError = err.response && err.response.body && err.response.body.errors;
+      throw err;
+    }))
+    .finally(action(() => { this.isLoadingLink = false; }));
+  }
+
+
+  deleteLink(linkId: string) {
+    this.isLoadingLink = true
+    this.linkError = undefined
+    return linkService.deleteGroupLink(linkId).then (
+      action( () => {
+        this.groupLinksMap.delete(linkId)
+      }
+      )
+    )
+    .catch(action((err: any) => {
+      this.linkError = err.response && err.response.body && err.response.body.errors;
+      throw err;
+    }))
+    .finally(action(() => { this.isLoadingLink = false; }));
+  }
+
+  createLink(newLink: GroupLink) {
+    this.isLoadingLink = true
+    this.linkError = undefined
+    return linkService.createGroupLink(newLink).then (
+      action( () => {
+        this.groupLinksMap.set(newLink.groupId, newLink)
+      }
+      )
+    )
+    .catch(action((err: any) => {
+      this.linkError = err.response && err.response.body && err.response.body.errors;
+      throw err;
+    }))
+    .finally(action(() => { this.isLoadingLink = false; }));
+  }
 
 }
 

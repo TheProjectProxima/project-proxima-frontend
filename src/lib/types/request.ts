@@ -26,3 +26,6 @@ export type LoginUser = {
   export type ResponseFriend = {
     friend: Friend;
   }
+  export type ResponseLink = {
+    link: GroupLink
+  }
