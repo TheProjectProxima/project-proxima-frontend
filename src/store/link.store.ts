@@ -1,10 +1,7 @@
 import {action, computed, makeAutoObservable, observable} from 'mobx';
-import { Image } from '../types/types';
 import { RootStore } from './index.store';
 import linkService from '../services/link.service';
-import { UserStore } from './user.store';
 import { GroupLink } from '../lib/types/model';
-import GroupCard from '../components/GroupCard/GroupCard';
 
 
 export class LinkStore {

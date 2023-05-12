@@ -1,7 +1,7 @@
 import requests from '../api/requests';
 import { GroupLink } from '../lib/types/model';
 import { LoginUser, ResponseGroupLink, ResponseUser, SignUpUser } from '../lib/types/request';
-import { Image } from '../types/types';
+import { Friend, Image } from '../types/types';
 
 export default {
     getImage: (uuid: string): Promise<GroupLink> =>
@@ -14,4 +14,5 @@ export default {
     requests.post("/image/", {newImage}),
     getImageThumbnail: (uuid: string): Promise<Image> =>
     requests.get(`/image/${uuid}/mini/`),
-};
+
+  };
