@@ -17,9 +17,9 @@ export class LinkStore {
     makeAutoObservable(this)
   }
 
-  @computed get allLinksInMap() {
-    return [...this.groupLinksMap.values()];
-  }
+  // @computed get allLinksInMap() {
+  //   return [...this.groupLinksMap.values()];
+  // }
 
   fetchUserLinks() {
     this.isLoadingLink = true;
