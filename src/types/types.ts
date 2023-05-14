@@ -68,6 +68,19 @@ type ImagesOnUsers = {
     userId: string,
 }
 
+type Friend = {
+  user: UserAccount,
+  userId: string,
+  friend: UserAccount,
+  friendId: string,
+  uniqueId: string,
+  requested: Boolean,
+  accepted: Boolean,
+  requested_at?: Date,
+  last_linked: Date,
+  deleted_at: Date
+}
+
 export {
     UserAccount,
     GroupLink,
@@ -75,5 +88,6 @@ export {
     ImagesOnUsers,
     Image,
     ProfileImage,
+    Friend
 }
 

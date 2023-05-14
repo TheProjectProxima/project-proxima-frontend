@@ -1,92 +1,96 @@
 import {action, computed, makeAutoObservable, observable} from 'mobx';
-import { GroupLink } from '../types/types';
+import { RootStore } from './index.store';
+import linkService from '../services/link.service';
+import { GroupLink } from '../lib/types/model';
 
 
-class Store {
-  isLoading = true;
-  groupLinksMap: Map<string, GroupLink> = observable.map();
-  slug?: string = undefined;
-  error?: string = undefined;
+export class LinkStore {
+  rootStore: RootStore
+  groupLinksMap: Map<string, GroupLink> = new Map()
+  isLoadingLink: boolean
+  linkError : string | undefined
 
-  constructor() {
-    makeAutoObservable(this);
+  constructor(rootStore: RootStore) {
+    this.rootStore = rootStore
+    this.isLoadingLink = false
+    this.linkError = undefined
+    makeAutoObservable(this)
   }
 
-  @computed get comments() {
-    return [...this.commentsMap.values()];
+  @computed get allLinksInMap() {
+    return [...this.groupLinksMap.values()];
   }
 
-  $clear(slug: string) {
-    if (slug === this.slug) return;
-    this.slug = slug;
-
-    this.groupLinksMap.clear();
-    this.isLoading = true;
-    this.error = undefined;
-  }
-
-  $updateGroupLinksMap(groupLinks: GroupLink[]) {
-    groupLinks.forEach((groupLink) =>
-      this.groupLinksMap.set(groupLink.groupId, groupLink)
-    );
-  }
-
-  loadComments(slug: string) {
-    this.$clear(slug);
-
-    CommentsService.get(slug)
-      .then(
-        action(({comments}: CommentGetResponse) => {
-          this.$updateCommentsMap(comments);
-        })
-      )
-      .catch(
-        action((err) => {
-          console.error(err);
-          this.error = ErrorMessages.default;
-        })
-      )
-      .finally(
-        action(() => {
-          this.isLoading = false;
-        })
-      );
-  }
-
-  createComment(comment: string) {
-    if (!this.slug) return;
-
-    return CommentsService.create(this.slug, {body: comment})
-      .then(
-        action(({comment}) => {
-          this.commentsMap.set(comment.id.toString(), comment);
-        })
-      )
-      .catch(
-        action((err) => {
-          console.error(err);
-          throw err;
-        })
-      );
-  }
-
-  deleteComment(id: number) {
-    if (!this.slug) return;
-
-    const idString = id.toString();
-    const comment = this.commentsMap.get(idString);
-    this.commentsMap.delete(idString);
-
-    if (!comment) return;
-
-    return CommentsService.delete(this.slug, id).catch(
-      action((err) => {
-        this.commentsMap.set(id.toString(), comment);
-        console.error(err);
+  fetchUserLinks() {
+    this.isLoadingLink = true;
+    this.linkError = undefined;
+    return linkService.getUserLinks(this.rootStore.userStore.user.userId)
+      .then(action(
+        (links: GroupLink[]) => {
+          links.forEach((link: GroupLink) => {
+            this.groupLinksMap.set(link.groupId, link)
+          })
+        }
+      ))
+      .catch(action((err: any) => {
+        this.linkError = err.response && err.response.body && err.response.body.errors;
         throw err;
-      })
-    );
+      }))
+      .finally(action(() => { this.isLoadingLink = false; }));
   }
+
+  loadLink(linkId: string) {
+    return this.groupLinksMap.get(linkId)
+  }
+
+  updateLink(linkId: string, newLink : GroupLink) {
+    this.isLoadingLink = true
+    this.linkError = undefined
+    return linkService.updateGroupLink(linkId, newLink).then (
+      action( () => {
+        this.groupLinksMap.set(linkId, newLink)
+      }
+      )
+    )
+    .catch(action((err: any) => {
+      this.linkError = err.response && err.response.body && err.response.body.errors;
+      throw err;
+    }))
+    .finally(action(() => { this.isLoadingLink = false; }));
+  }
+
+
+  deleteLink(linkId: string) {
+    this.isLoadingLink = true
+    this.linkError = undefined
+    return linkService.deleteGroupLink(linkId).then (
+      action( () => {
+        this.groupLinksMap.delete(linkId)
+      }
+      )
+    )
+    .catch(action((err: any) => {
+      this.linkError = err.response && err.response.body && err.response.body.errors;
+      throw err;
+    }))
+    .finally(action(() => { this.isLoadingLink = false; }));
+  }
+
+  createLink(newLink: GroupLink) {
+    this.isLoadingLink = true
+    this.linkError = undefined
+    return linkService.createGroupLink(newLink).then (
+      action( () => {
+        this.groupLinksMap.set(newLink.groupId, newLink)
+      }
+      )
+    )
+    .catch(action((err: any) => {
+      this.linkError = err.response && err.response.body && err.response.body.errors;
+      throw err;
+    }))
+    .finally(action(() => { this.isLoadingLink = false; }));
+  }
+
 }
 
-export default new Store();

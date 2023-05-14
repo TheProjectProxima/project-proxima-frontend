@@ -1,6 +1,6 @@
 import {action, makeAutoObservable} from 'mobx';
 
-import {AuthStore, UserStore} from './index.store';
+import { RootStore} from './index.store';
 import {AuthService} from '../services/index.service';
 
 import { AuthUser } from '../lib/types/service';
@@ -10,10 +10,11 @@ enum RequestType {
   register,
 }
 
-class Store {
+export class AuthStore {
   isLoading = false;
   // add type for errors later 
   errors? =  undefined;
+  rootStore: RootStore
 
   userName = "";
   email = "";
@@ -22,7 +23,8 @@ class Store {
   firstName = "";
   lastName = "";
 
-  constructor() {
+  constructor(rootStore: RootStore) {
+    this.rootStore = rootStore;
     makeAutoObservable(this);
   }
 
@@ -90,7 +92,7 @@ class Store {
     api(this.getAuthValues(type))
       .then(
         action(({user}) => {
-          UserStore.setUser(user);
+          this.rootStore.userStore.setUser(user);
           this.clear();
         })
       )
@@ -117,7 +119,7 @@ class Store {
   }
 
   logout() {
-    UserStore.forgetUser();
+    this.rootStore.userStore.forgetUser();
     // also clear:
     // groups
     // friends 
@@ -125,5 +127,3 @@ class Store {
     // profile images
   }
 }
-
-export default new Store();
