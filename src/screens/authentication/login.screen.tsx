@@ -2,11 +2,12 @@ import React, { memo, useState } from 'react';
 import { TouchableOpacity, StyleSheet, Text, View } from 'react-native';
 // import Background from '../components/Background/Background';
 import Button from '../../components/Button/Button';
-import TextInput from '../../components/TextInput/TextInput';
 // import BackButton from '../components/BackButton/BackButton';
 import { theme } from '../../theme';
 import { observer } from 'mobx-react';
 import { useStore } from '../../store/index.store';
+import userService from '../../services/user.service';
+import { TextInput } from 'react-native-paper';
 //import { Navigation } from '../types';
 
 // type Props = {
@@ -16,10 +17,13 @@ import { useStore } from '../../store/index.store';
 export const LoginScreen = observer(({ navigation }:{navigation:any}) => {
   const store = useStore()
   const authStore = store.authStore
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+
 
   const _onLoginPressed = () => {
-    const emailError = emailValidator(authStore.email);
-    const passwordError = passwordValidator(authStore.password);
+    const emailError = emailValidator(email);
+    const passwordError = passwordValidator(password);
 
     if (!emailError && !passwordError) {
       authStore.setIsAuthenticated(true)
@@ -53,8 +57,8 @@ export const LoginScreen = observer(({ navigation }:{navigation:any}) => {
       <TextInput
         label="Email"
         returnKeyType="next"
-        value={authStore.email}
-        onChangeText={(text:string) => authStore.setEmail(text)}
+        value={email}
+        onChangeText={(text:string) => setEmail(text)}
         autoCapitalize="none"
         textContentType="emailAddress"
         keyboardType="email-address"
@@ -63,8 +67,8 @@ export const LoginScreen = observer(({ navigation }:{navigation:any}) => {
       <TextInput
         label="Password"
         returnKeyType="done"
-        value={authStore.password}
-        onChangeText={(text:string) => authStore.setPassword(text)}
+        value={password}
+        onChangeText={(text:string) => setPassword(text)}
         secureTextEntry
       />
 
@@ -81,7 +85,7 @@ export const LoginScreen = observer(({ navigation }:{navigation:any}) => {
 
       <View>
         <Text>Don’t have an account? </Text>
-        <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>
+        <TouchableOpacity onPress={() => {authStore.clear(), navigation.navigate('SignUp')}}>
           <Text>Sign up</Text>
         </TouchableOpacity>
       </View>

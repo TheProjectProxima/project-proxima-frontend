@@ -5,13 +5,13 @@ import { theme } from '../../theme';
 
 type Props = React.ComponentProps<typeof Input> & { errorText?: string };
 
-const TextInput = ({ errorText, ...props }: Props) => (
-  <View >
-    <Input
-      {...props}
-    />
-    {errorText ? <Text>{errorText}</Text> : null}
-  </View>
-);
+// const TextInput = ({ errorText, ...props }: Props) => (
+//   <View >
+//     <Input
+//       {...props}
+//     />
+//     {errorText ? <Text>{errorText}</Text> : null}
+//   </View>
+// );
 
-export default memo(TextInput);
+// export default memo(TextInput);

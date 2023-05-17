@@ -2,9 +2,10 @@ import React, { memo, useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 // import Background from '../components/Background';
 import Button from '../../components/Button/Button';
-import TextInput from '../../components/TextInput/TextInput';
 // import BackButton from '../components/BackButton';
 import { theme } from '../../theme';
+import { useStore } from '../../store/index.store';
+import { TextInput } from 'react-native-paper';
 //import { Navigation } from '../types';
 
 
@@ -12,67 +13,67 @@ import { theme } from '../../theme';
 //   navigation: Navigation;
 // };
 
-export const SignUpScreen = ({ navigation }: {navigation:any}) => {
-  const [name, setName] = useState({ value: '', error: '' });
-  const [email, setEmail] = useState({ value: '', error: '' });
-  const [password, setPassword] = useState({ value: '', error: '' });
+export const SignUpScreen = ({ navigation }: { navigation: any }) => {
+  const store = useStore()
+  const authStore = store.authStore
+  const [userName, setUserName] = useState('')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [firstName, setFirstName] = useState('')
+  const [lastName, setLastName] = useState('')
 
   const _onSignUpPressed = () => {
-    const nameError = nameValidator(name.value);
-    const emailError = emailValidator(email.value);
-    const passwordError = passwordValidator(password.value);
-
-    if (emailError || passwordError || nameError) {
-      setName({ ...name, error: nameError });
-      setEmail({ ...email, error: emailError });
-      setPassword({ ...password, error: passwordError });
-      return;
+    const emailError = emailValidator(email);
+    const passwordError = passwordValidator(password);
+    if (!emailError && !passwordError) {
+      authStore.setIsAuthenticated(true)
+      // authStore.sign up
     }
-
-    navigation.navigate('Dashboard');
   };
 
   const emailValidator = (email: string) => {
     const re = /\S+@\S+\.\S+/;
-  
+
     if (!email || email.length <= 0) return 'Email cannot be empty.';
     if (!re.test(email)) return 'Ooops! We need a valid email address.';
-  
+
     return '';
   };
-  
-   const passwordValidator = (password: string) => {
+
+  const passwordValidator = (password: string) => {
     if (!password || password.length <= 0) return 'Password cannot be empty.';
-  
+
     return '';
   };
-  
-   const nameValidator = (name: string) => {
-    if (!name || name.length <= 0) return 'Name cannot be empty.';
-  
-    return '';
-  };
+
+
 
   return (
     <View>
       {/* <BackButton goBack={() => navigation.navigate('HomeScreen')} /> */}
 
       <TextInput
-        label="Name"
-        returnKeyType="next"
-        value={name.value}
-        onChangeText={text => setName({ value: text, error: '' })}
-        error={!!name.error}
-        errorText={name.error}
+        label="User Name"
+        value={userName}
+        onChangeText={(text:string) => setUserName(text)}
+      />
+
+      <TextInput
+        label="First Name"
+        value={firstName}
+        onChangeText={(text:string) => setFirstName(text)}
+      />
+
+      <TextInput
+        label="Last Name"
+        value={lastName}
+        onChangeText={(text:string) => setLastName(text)}
       />
 
       <TextInput
         label="Email"
-        returnKeyType="next"
-        value={email.value}
-        onChangeText={text => setEmail({ value: text, error: '' })}
-        error={!!email.error}
-        errorText={email.error}
+        value={email}
+        onChangeText={(text:string) => setEmail(text)}
         autoCapitalize="none"
         //autoCompleteType="email"
         textContentType="emailAddress"
@@ -81,43 +82,23 @@ export const SignUpScreen = ({ navigation }: {navigation:any}) => {
 
       <TextInput
         label="Password"
-        returnKeyType="done"
-        value={password.value}
-        onChangeText={text => setPassword({ value: text, error: '' })}
-        error={!!password.error}
-        errorText={password.error}
+        value={password}
+        onChangeText={(text: string) => setPassword(text)}
         secureTextEntry
       />
 
-      <Button mode="contained" onPress={_onSignUpPressed} style={styles.button}>
+      <Button mode="contained" >
         Sign Up
       </Button>
 
-      <View style={styles.row}>
-        <Text style={styles.label}>Already have an account? </Text>
+      <View >
+        <Text >Already have an account? </Text>
         <TouchableOpacity onPress={() => navigation.navigate('Login')}>
-          <Text style={styles.link}>Login</Text>
+          <Text >Login</Text>
         </TouchableOpacity>
       </View>
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  label: {
-    color: theme.colors.ui.secondary,
-  },
-  button: {
-    marginTop: 24,
-  },
-  row: {
-    flexDirection: 'row',
-    marginTop: 4,
-  },
-  link: {
-    fontWeight: 'bold',
-    color: theme.colors.text.primary,
-  },
-});
 
 //export default memo(RegisterScreen);
