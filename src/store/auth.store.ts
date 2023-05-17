@@ -4,6 +4,7 @@ import { RootStore} from './index.store';
 import {AuthService} from '../services/index.service';
 
 import { AuthUser } from '../lib/types/service';
+import { UserStore } from './user.store';
 
 enum RequestType {
   login,
@@ -126,6 +127,7 @@ export class AuthStore {
 
   logout() {
     this.rootStore.userStore.forgetUser();
+    this.clear();
     this.isAuthenticated = false
     // also clear:
     // groups

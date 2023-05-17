@@ -13,8 +13,8 @@ export class RootStore {
     imageStore: ImageStore
 
     constructor() {
-        this.authStore = new AuthStore(this)
         this.userStore = new UserStore(this)
+        this.authStore = new AuthStore(this)
         this.friendStore = new FriendStore(this)
         this.linkStore = new LinkStore(this)
         this.imageStore = new ImageStore(this)

@@ -10,10 +10,10 @@ const UserStack = createNativeStackNavigator();
 export const UserProfileNavigator = () => {
   return (
     <UserStack.Navigator>
-      {/* <UserStack.Screen
+      <UserStack.Screen
         name="User"
         component={UserProfileScreen}
-      /> */}
+      />
       <UserStack.Screen 
         name="Settings"
         component={SettingsScreen}
