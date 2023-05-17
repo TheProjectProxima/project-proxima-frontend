@@ -5,27 +5,27 @@ import Button from '../../components/Button/Button';
 import TextInput from '../../components/TextInput/TextInput';
 // import BackButton from '../components/BackButton/BackButton';
 import { theme } from '../../theme';
+import { observer } from 'mobx-react';
+import { useStore } from '../../store/index.store';
 //import { Navigation } from '../types';
 
 // type Props = {
 //   navigation: Navigation;
 // };
 
-export const LoginScreen = ({ navigation }:{navigation:any}) => {
-  const [email, setEmail] = useState({ value: '', error: '' });
-  const [password, setPassword] = useState({ value: '', error: '' });
+export const LoginScreen = observer(({ navigation }:{navigation:any}) => {
+  const store = useStore()
+  const authStore = store.authStore
 
   const _onLoginPressed = () => {
-    const emailError = emailValidator(email.value);
-    const passwordError = passwordValidator(password.value);
+    const emailError = emailValidator(authStore.email);
+    const passwordError = passwordValidator(authStore.password);
 
-    if (emailError || passwordError) {
-      setEmail({ ...email, error: emailError });
-      setPassword({ ...password, error: passwordError });
-      return;
+    if (!emailError && !passwordError) {
+      authStore.setIsAuthenticated(true)
+      // authStore.login
     }
 
-    navigation.navigate('AppNavigator');
   };
 
 
@@ -46,12 +46,6 @@ export const LoginScreen = ({ navigation }:{navigation:any}) => {
   return '';
 };
 
- const nameValidator = (name: string) => {
-  if (!name || name.length <= 0) return 'Name cannot be empty.';
-
-  return '';
-};
-
   return (
     <View>
       {/* <BackButton goBack={() => navigation.navigate('HomeScreen')} /> */}
@@ -59,10 +53,8 @@ export const LoginScreen = ({ navigation }:{navigation:any}) => {
       <TextInput
         label="Email"
         returnKeyType="next"
-        value={email.value}
-        onChangeText={(text:string) => setEmail({ value: text, error: '' })}
-        error={!!email.error}
-        errorText={email.error}
+        value={authStore.email}
+        onChangeText={(text:string) => authStore.setEmail(text)}
         autoCapitalize="none"
         textContentType="emailAddress"
         keyboardType="email-address"
@@ -71,18 +63,15 @@ export const LoginScreen = ({ navigation }:{navigation:any}) => {
       <TextInput
         label="Password"
         returnKeyType="done"
-        value={password.value}
-        onChangeText={(text:string) => setPassword({ value: text, error: '' })}
-        error={!!password.error}
-        errorText={password.error}
+        value={authStore.password}
+        onChangeText={(text:string) => authStore.setPassword(text)}
         secureTextEntry
       />
 
-      <View style={styles.forgotPassword}>
+      <View >
         <TouchableOpacity
-          onPress={() => navigation.navigate('ForgotPasswordScreen')}
         >
-          <Text style={styles.label}>Forgot your password?</Text>
+          <Text>Forgot your password?</Text>
         </TouchableOpacity>
       </View>
 
@@ -90,32 +79,13 @@ export const LoginScreen = ({ navigation }:{navigation:any}) => {
         Login
       </Button>
 
-      <View style={styles.row}>
-        <Text style={styles.label}>Don’t have an account? </Text>
+      <View>
+        <Text>Don’t have an account? </Text>
         <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>
-          <Text style={styles.link}>Sign up</Text>
+          <Text>Sign up</Text>
         </TouchableOpacity>
       </View>
     </View>
   );
-};
-
-const styles = StyleSheet.create({
-  forgotPassword: {
-    width: '100%',
-    alignItems: 'flex-end',
-    marginBottom: 24,
-  },
-  row: {
-    flexDirection: 'row',
-    marginTop: 4,
-  },
-  label: {
-    color: theme.colors.ui.secondary,
-  },
-  link: {
-    fontWeight: 'bold',
-    color: theme.colors.text.primary,
-  },
 });
 

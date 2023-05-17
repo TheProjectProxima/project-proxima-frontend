@@ -23,10 +23,10 @@ export class RootStore {
 }
 
 export const rootStore = new RootStore()
+
 export const StoreContext = createContext(rootStore);
 export const StoreProvider = StoreContext.Provider;
 export const useStore = () => useContext(StoreContext);
-
 
 
 

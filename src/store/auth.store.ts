@@ -15,6 +15,7 @@ export class AuthStore {
   // add type for errors later 
   errors? =  undefined;
   rootStore: RootStore
+  isAuthenticated = false;
 
   userName = "";
   email = "";
@@ -58,6 +59,10 @@ export class AuthStore {
     }
   }
 
+  setIsAuthenticated(isAuthenticated : boolean) {
+    this.isAuthenticated = isAuthenticated
+  }
+
   setUsername(username: string) {
     this.userName = username;
   }
@@ -94,6 +99,7 @@ export class AuthStore {
         action(({user}) => {
           this.rootStore.userStore.setUser(user);
           this.clear();
+          this.isAuthenticated = true
         })
       )
       .catch(
@@ -120,6 +126,7 @@ export class AuthStore {
 
   logout() {
     this.rootStore.userStore.forgetUser();
+    this.isAuthenticated = false
     // also clear:
     // groups
     // friends 
