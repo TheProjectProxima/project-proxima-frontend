@@ -1,6 +1,4 @@
-import { Provider as PaperProvider } from 'react-native-paper';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { primaryTheme }  from './src/theme/paper.theme'
 import { PicLinkNavigation } from './src/navigation';
 import {
   useFonts,
@@ -10,6 +8,9 @@ import {
 import AppLoading from 'expo-app-loading';
 import { ThemeProvider } from 'styled-components/native';
 import { theme } from './src/theme';
+import { StoreProvider, rootStore } from './src/store/index.store';
+import React from 'react';
+
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -21,14 +22,13 @@ export default function App() {
   }
   else {
     return (
+      <StoreProvider value={rootStore}>
       <ThemeProvider theme={theme}>
         <SafeAreaProvider>
           <PicLinkNavigation/>
         </SafeAreaProvider>
       </ThemeProvider>
-
-  
-  
+      </StoreProvider>  
     ); 
   }
  

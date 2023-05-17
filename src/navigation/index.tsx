@@ -6,11 +6,11 @@ import { AppNavigator } from './appNavigator';
 // Make sure to add SignIn and Signup Navigator later along with firebase. 
 
 export const PicLinkNavigation = () => {
+  const { isAuthenticated } = useContext(AuthenticationContext);
 
   return (
     <NavigationContainer>
-     <AppNavigator/> 
-       {/* <AccountNavigator/>  */}
+      {isAuthenticated ? <AppNavigator /> : <AccountNavigator />}
     </NavigationContainer>
   );
 }
