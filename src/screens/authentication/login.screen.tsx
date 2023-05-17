@@ -21,7 +21,7 @@ export const LoginScreen = observer(({ navigation }:{navigation:any}) => {
   const [password, setPassword] = useState('')
 
 
-  const _onLoginPressed = () => {
+  const handleLogin = () => {
     const emailError = emailValidator(email);
     const passwordError = passwordValidator(password);
 
@@ -79,7 +79,7 @@ export const LoginScreen = observer(({ navigation }:{navigation:any}) => {
         </TouchableOpacity>
       </View>
 
-      <Button mode="contained" onPress={_onLoginPressed}>
+      <Button mode="contained" onPress={handleLogin}>
         Login
       </Button>
 

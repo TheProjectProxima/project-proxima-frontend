@@ -22,7 +22,7 @@ export const SignUpScreen = ({ navigation }: { navigation: any }) => {
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
 
-  const _onSignUpPressed = () => {
+  const handleSignUp = () => {
     const emailError = emailValidator(email);
     const passwordError = passwordValidator(password);
     if (!emailError && !passwordError) {
@@ -87,7 +87,7 @@ export const SignUpScreen = ({ navigation }: { navigation: any }) => {
         secureTextEntry
       />
 
-      <Button mode="contained" >
+      <Button mode="contained" onPress={handleSignUp} >
         Sign Up
       </Button>
 
