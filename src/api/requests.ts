@@ -1,9 +1,8 @@
 import axios from 'axios';
-import { AuthStore } from '../store/index.store';
 
 
 // need to add an env config for local and prod later 
-export const API_URI = 'localhost:5000/'
+export const API_URI = 'localhost:3002/'
 
 
 // this is for when we add  JWT to it for authentication for every request 
@@ -23,7 +22,7 @@ export const API_URI = 'localhost:5000/'
 
 const handleErrors = (error : any) => {
   if (error.response && error.response.status === 401) {
-    AuthStore.logout();
+    // AuthStore.logout();
   }
 
   throw error;
@@ -42,12 +41,12 @@ const requests = {
       .get(`\${API_URI}\${url}`)
       .then((response) => response.data)
       .catch(handleErrors),
-  put: (url : string, body) =>
+  put: (url : string, body: any) =>
     axios
       .put(`\${API_URI}\${url}`, body)
       .then((response) => response.data)
       .catch(handleErrors),
-  post: (url : string, body) =>
+  post: (url : string, body: any) =>
     axios
       .post(`\${API_URI}\${url}`, body)
       .then((response) => response.data)
