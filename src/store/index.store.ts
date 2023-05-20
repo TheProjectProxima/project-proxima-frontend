@@ -1,3 +1,4 @@
+import { createContext, useContext } from "react";
 import { AuthStore } from "./auth.store";
 import { FriendStore } from "./friend.store";
 import { ImageStore } from "./image.store";
@@ -12,8 +13,8 @@ export class RootStore {
     imageStore: ImageStore
 
     constructor() {
-        this.authStore = new AuthStore(this)
         this.userStore = new UserStore(this)
+        this.authStore = new AuthStore(this)
         this.friendStore = new FriendStore(this)
         this.linkStore = new LinkStore(this)
         this.imageStore = new ImageStore(this)
@@ -22,6 +23,10 @@ export class RootStore {
 }
 
 export const rootStore = new RootStore()
+
+export const StoreContext = createContext(rootStore);
+export const StoreProvider = StoreContext.Provider;
+export const useStore = () => useContext(StoreContext);
 
 
 

@@ -4,6 +4,7 @@ import { RootStore} from './index.store';
 import {AuthService} from '../services/index.service';
 
 import { AuthUser } from '../lib/types/service';
+import { UserStore } from './user.store';
 
 enum RequestType {
   login,
@@ -15,6 +16,7 @@ export class AuthStore {
   // add type for errors later 
   errors? =  undefined;
   rootStore: RootStore
+  isAuthenticated = false;
 
   userName = "";
   email = "";
@@ -58,6 +60,10 @@ export class AuthStore {
     }
   }
 
+  setIsAuthenticated(isAuthenticated : boolean) {
+    this.isAuthenticated = isAuthenticated
+  }
+
   setUsername(username: string) {
     this.userName = username;
   }
@@ -94,6 +100,7 @@ export class AuthStore {
         action(({user}) => {
           this.rootStore.userStore.setUser(user);
           this.clear();
+          this.isAuthenticated = true
         })
       )
       .catch(
@@ -119,7 +126,9 @@ export class AuthStore {
   }
 
   logout() {
-    this.rootStore.userStore.forgetUser();
+    // this.rootStore.userStore.forgetUser();
+    // this.clear();
+    this.isAuthenticated = false
     // also clear:
     // groups
     // friends 
