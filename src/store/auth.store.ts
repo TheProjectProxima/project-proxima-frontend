@@ -126,8 +126,8 @@ export class AuthStore {
   }
 
   logout() {
-    this.rootStore.userStore.forgetUser();
-    this.clear();
+    // this.rootStore.userStore.forgetUser();
+    // this.clear();
     this.isAuthenticated = false
     // also clear:
     // groups

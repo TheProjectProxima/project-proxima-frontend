@@ -11,12 +11,18 @@ export const UserProfileScreen = observer(({ navigation }: {navigation:any}) => 
   const userStore = rooteStore.userStore
   const user = userStore.user
   const authStore = rooteStore.authStore
+
+  const handleSignOut = () => {
+    authStore.setIsAuthenticated(false)
+  };
+
+
   return (
     <View>
         <Text>User Profile</Text>
         <Text>{user.userName}</Text>
 
-        <Button mode="contained" onPress={authStore.logout}>
+        <Button mode="contained" onPress={handleSignOut}>
         Sign Out
       </Button>
     </View>
