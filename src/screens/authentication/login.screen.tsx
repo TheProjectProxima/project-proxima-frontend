@@ -23,8 +23,9 @@ export const LoginScreen = observer(({ navigation }:{navigation:any}) => {
 
   const handleLogin = () => {
     const passwordError = passwordValidator(password);
-
-    if (!passwordError) {
+    if (!passwordError) {    
+      authStore.setUsername(userName)
+      authStore.setPassword(password)
       authStore.login()
     }
 

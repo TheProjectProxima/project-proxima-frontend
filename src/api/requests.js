@@ -33,26 +33,34 @@ const handleErrors = (error ) => {
   throw error;
 };
 
+
+const api = axios.create({
+  baseURL: 'https://your-api-base-url.com',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+});
+
 // add token to the backend as well???????
 // call token config once JWT and hashinga are added 
 const requests = {
   delete: (url) =>
-    axios
+    api
       .delete(`${API_URI}${url}`)
       .then((response) => response.data)
       .catch(handleErrors),
   get: (url ) =>
-    axios
+    api
       .get(`${API_URI}${url}`)
       .then((response) => response.data)
       .catch(handleErrors),
   put: (url , body) =>
-    axios
+    api
       .put(`${API_URI}${url}`, body)
       .then((response) => response.data)
       .catch(handleErrors),
   post: (url , body) =>
-    axios
+    api
       .post(`${API_URI}${url}`, body)
       .then((response) => response.data)
       .catch(handleErrors),
