@@ -21,13 +21,20 @@ export const SignUpScreen = ({ navigation }: { navigation: any }) => {
   const [password, setPassword] = useState('')
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
+  const [phoneNumber, setPhoneNumber] = useState('')
+
 
   const handleSignUp = () => {
     const emailError = emailValidator(email);
     const passwordError = passwordValidator(password);
     if (!emailError && !passwordError) {
-      authStore.setIsAuthenticated(true)
-      // authStore.sign up
+      authStore.setUsername(userName)
+      authStore.setPassword(password)
+      authStore.setLastName(lastName)
+      authStore.setFirstName(firstName)
+      authStore.setEmail(email)
+      authStore.setPhoneNumber(phoneNumber)
+      authStore.register()
     }
   };
 
@@ -53,12 +60,6 @@ export const SignUpScreen = ({ navigation }: { navigation: any }) => {
       {/* <BackButton goBack={() => navigation.navigate('HomeScreen')} /> */}
 
       <TextInput
-        label="User Name"
-        value={userName}
-        onChangeText={(text:string) => setUserName(text)}
-      />
-
-      <TextInput
         label="First Name"
         value={firstName}
         onChangeText={(text:string) => setFirstName(text)}
@@ -68,6 +69,19 @@ export const SignUpScreen = ({ navigation }: { navigation: any }) => {
         label="Last Name"
         value={lastName}
         onChangeText={(text:string) => setLastName(text)}
+      />
+
+<TextInput
+        label="User Name"
+        value={userName}
+        onChangeText={(text:string) => setUserName(text)}
+      />
+
+<TextInput
+        label="Password"
+        value={password}
+        onChangeText={(text: string) => setPassword(text)}
+        secureTextEntry
       />
 
       <TextInput
@@ -80,12 +94,14 @@ export const SignUpScreen = ({ navigation }: { navigation: any }) => {
         keyboardType="email-address"
       />
 
-      <TextInput
-        label="Password"
-        value={password}
-        onChangeText={(text: string) => setPassword(text)}
-        secureTextEntry
-      />
+<TextInput
+        label="Phone Number"
+        value={phoneNumber}
+        onChangeText={(text: string) => setPhoneNumber(text)}
+        textContentType="telephoneNumber"
+        keyboardType="phone-pad"     
+         />
+
 
       <Button mode="contained" onPress={handleSignUp} >
         Sign Up
