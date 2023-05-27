@@ -79,6 +79,7 @@ export class AuthStore {
     AuthService.login(data).then(
       (res) => {
         const {user} = res
+        console.log(user)
         this.rootStore.userStore.setUser(user)
         this.setIsAuthenticated(true)
         this.clear()
@@ -107,6 +108,7 @@ export class AuthStore {
       (res) => {
         const {user} = res
         this.rootStore.userStore.setUser(user)
+        console.log(this.rootStore.userStore.user)
         this.setIsAuthenticated(true)
         this.clear()
       }

@@ -6,6 +6,7 @@ import Button from '../../components/Button/Button';
 import { theme } from '../../theme';
 import { useStore } from '../../store/index.store';
 import { TextInput } from 'react-native-paper';
+import { observer } from 'mobx-react';
 //import { Navigation } from '../types';
 
 
@@ -13,7 +14,7 @@ import { TextInput } from 'react-native-paper';
 //   navigation: Navigation;
 // };
 
-export const SignUpScreen = ({ navigation }: { navigation: any }) => {
+export const SignUpScreen = observer(({ navigation }: { navigation: any }) => {
   const store = useStore()
   const authStore = store.authStore
   const [userName, setUserName] = useState('')
@@ -115,6 +116,6 @@ export const SignUpScreen = ({ navigation }: { navigation: any }) => {
       </View>
     </View>
   );
-};
+});
 
 //export default memo(RegisterScreen);

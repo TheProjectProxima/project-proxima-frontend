@@ -20,7 +20,7 @@ export const UserProfileScreen = observer(({ navigation }: {navigation:any}) => 
   return (
     <View>
         <Text>User Profile</Text>
-        {/* <Text>{user.userName}</Text> */}
+        <Text>{userStore.user.userName}</Text>
 
         <Button mode="contained" onPress={handleSignOut}>
         Sign Out

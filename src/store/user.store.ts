@@ -29,10 +29,15 @@ export class UserStore {
       userId: '',
       email: '',
       userName: '',
-      profileImage: [],
-      friendsWith: [],
-      groups: []
-    }
+      firstName: '', 
+      lastName: '',
+      password: '',
+      phoneNumber: '', 
+      is_active: false,
+      userFriendsIds: [],
+
+  }
+  
     makeAutoObservable(this);
   }
 
@@ -57,7 +62,7 @@ export class UserStore {
   setUser(user: User) {
     this.user = user;
     this.error = undefined;
-    this.$updateStorage(user);
+    // this.$updateStorage(user);
   }
 
   loadUser() {
