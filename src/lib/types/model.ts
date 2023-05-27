@@ -1,12 +1,21 @@
+// User tpe needs to match the backedn return response
+// WOrk on this 
 export type User = {
     // add token later for JWT 
     userId: string,
     email: string,
     userName: string,
-    profileImage: ProfileImage[],
-    friendsWith: User[],
-    groups: GroupLink[],
+    firstName: string, 
+    lastName: string,
+    password: string,
+    phoneNumber: string, 
+    is_active: boolean,
+    userFriendsIds: User[],
+    updatedAt?: Date, 
+    createdAt?: Date,
+    deletedAt?: Date,
 }
+
 
 export type GroupLink = {
     groupId: string, 

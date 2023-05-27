@@ -17,17 +17,16 @@ import { TextInput } from 'react-native-paper';
 export const LoginScreen = observer(({ navigation }:{navigation:any}) => {
   const store = useStore()
   const authStore = store.authStore
-  const [email, setEmail] = useState('')
+  const [userName, setUserName] = useState('')
   const [password, setPassword] = useState('')
 
 
   const handleLogin = () => {
-    const emailError = emailValidator(email);
     const passwordError = passwordValidator(password);
-
-    if (!emailError && !passwordError) {
-      authStore.setIsAuthenticated(true)
-      // authStore.login
+    if (!passwordError) {    
+      authStore.setUsername(userName)
+      authStore.setPassword(password)
+      authStore.login()
     }
 
   };
@@ -55,13 +54,11 @@ export const LoginScreen = observer(({ navigation }:{navigation:any}) => {
       {/* <BackButton goBack={() => navigation.navigate('HomeScreen')} /> */}
 
       <TextInput
-        label="Email"
+        label="Username"
         returnKeyType="next"
-        value={email}
-        onChangeText={(text:string) => setEmail(text)}
+        value={userName}
+        onChangeText={(text:string) => setUserName(text)}
         autoCapitalize="none"
-        textContentType="emailAddress"
-        keyboardType="email-address"
       />
 
       <TextInput

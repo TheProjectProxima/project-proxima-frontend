@@ -5,6 +5,7 @@ import {AuthService} from '../services/index.service';
 
 import { AuthUser } from '../lib/types/service';
 import { UserStore } from './user.store';
+import { LoginUser, SignUpUser } from '../lib/types/request';
 
 enum RequestType {
   login,
@@ -40,26 +41,6 @@ export class AuthStore {
     this.errors = undefined;
   }
 
-  getAuthValues(type:  RequestType) : AuthUser {
-    if (type == RequestType.login) {
-      // For login
-      return {
-        userName: this.userName,
-        password: this.password,
-      };
-    } else {
-      // For sign up
-      return {
-        userName: this.userName,
-        email: this.email,
-        password: this.password,
-        phoneNumber: this.phoneNumber,
-        firstName: this.firstName,
-        lastName: this.lastName,
-      };
-    }
-  }
-
   setIsAuthenticated(isAuthenticated : boolean) {
     this.isAuthenticated = isAuthenticated
   }
@@ -88,46 +69,62 @@ export class AuthStore {
     this.lastName = lastName;
   }
 
-  $request(type: RequestType) {
-    this.isLoading = true;
-    this.errors = undefined;
-
-    const api =
-      type === RequestType.login ? AuthService.login : AuthService.signup;
-
-    api(this.getAuthValues(type))
-      .then(
-        action(({user}) => {
-          this.rootStore.userStore.setUser(user);
-          this.clear();
-          this.isAuthenticated = true
-        })
-      )
-      .catch(
-        action((err) => {
-          if (err?.response?.body?.errors) {
-            this.errors = err?.response?.body?.errors;
-          }
-        })
-      )
-      .finally(
-        action(() => {
-          this.isLoading = false;
-        })
-      );
-  }
 
   login() {
-    this.$request(RequestType.login);
+    const data : LoginUser = {
+      userName: this.userName,
+      password: this.password,
+    }
+
+    AuthService.login(data).then(
+      (res) => {
+        const {user} = res
+        console.log(user)
+        this.rootStore.userStore.setUser(user)
+        this.setIsAuthenticated(true)
+        this.clear()
+      }
+    )
+    .catch((error) => {
+      console.log(error)
+      this.errors = error
+    })
+    .finally(() => {
+      this.isLoading = false
+    })
   }
 
   register() {
-    this.$request(RequestType.register);
+    const data : SignUpUser = {
+      userName: this.userName,
+      email: this.email,
+      password: this.password,
+      firstName: this.firstName,
+      lastName: this.lastName,
+      phoneNumber: this.phoneNumber
+    }
+
+    AuthService.signup(data).then(
+      (res) => {
+        const {user} = res
+        this.rootStore.userStore.setUser(user)
+        console.log(this.rootStore.userStore.user)
+        this.setIsAuthenticated(true)
+        this.clear()
+      }
+    )
+    .catch((error) => {
+      console.log(error)
+      this.errors = error
+    })
+    .finally(() => {
+      this.isLoading = false
+    })
   }
 
   logout() {
-    // this.rootStore.userStore.forgetUser();
-    // this.clear();
+    this.rootStore.userStore.forgetUser()
+    this.clear()
     this.isAuthenticated = false
     // also clear:
     // groups
