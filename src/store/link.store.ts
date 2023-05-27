@@ -21,6 +21,10 @@ export class LinkStore {
   //   return [...this.groupLinksMap.values()];
   // }
 
+  linkCount() {
+    return this.groupLinksMap.size;
+  }
+
   fetchUserLinks() {
     this.isLoadingLink = true;
     this.linkError = undefined;
