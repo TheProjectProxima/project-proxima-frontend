@@ -121,9 +121,12 @@ export class UserStore {
       userId: '',
       email: '',
       userName: '',
-      profileImage: [],
-      friendsWith: [],
-      groups: []
+      firstName: '', 
+      lastName: '',
+      password: '',
+      phoneNumber: '', 
+      is_active: false,
+      userFriendsIds: [],
     });
   }
 }
