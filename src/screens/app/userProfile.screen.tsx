@@ -1,8 +1,13 @@
 import { observer } from 'mobx-react';
 import React from 'react';
-import { View, Text,Image} from 'react-native';
+import { View, Text} from 'react-native';
+import { Image } from 'expo-image';
 import { useStore } from '../../store/index.store';
-import { Button } from 'react-native-paper';
+import { Button, IconButton } from 'react-native-paper';
+import { User } from 'react-native-feather';
+import { theme } from '../../theme/index'
+
+
 
 
 
@@ -25,11 +30,25 @@ export const UserProfileScreen = observer(({ navigation }: {navigation:any}) => 
       <Text>User Profile</Text>
       </View>
       <View>
+        {user.profileImage ? 
+        <Image
+          source={user.profileImage}
+        /> :
+        <User
+        width={100}
+        height={100}
+        fill={theme.colors.common.black}
+        stroke={theme.colors.common.black}
+        />
+        }
+
         {/* <Image>{userStore.user.profileImage}</Image> */}
-        <Text>{userStore.user.userName}</Text>
-        <Button mode='contained' onPress={() => navigation.navigate('Settings')}>
-          Settings
-        </Button>
+        <Text>{user.userName}</Text>
+        <IconButton
+  icon="pencil"
+  size={30}
+  onPress={() => navigation.navigate('Settings')}
+/>
       </View>
       <View>
         <Text>User Groups: {linkStore.linkCount()}</Text>
