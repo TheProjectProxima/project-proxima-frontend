@@ -6,6 +6,7 @@ import {UserService} from '../services/index.service';
 
 import {User} from '../lib/types/model';
 import { RootStore } from './index.store';
+import { AuthStore } from './auth.store';
 
 const cache = new Cache({
   namespace: 'proximaApp',
@@ -95,6 +96,34 @@ export class UserStore {
       .then(
         action(({user}) => {
           this.user = user;
+        })
+      )
+      .catch(
+        action((err) => {
+          console.error(err);
+
+          if (err?.response?.body) {
+            this.error = err?.response?.body;
+          }
+
+          throw err;
+        })
+      )
+      .finally(
+        action(() => {
+          this.isUpdating = false;
+        })
+      );
+  }
+
+  deleteUser(userUuid: string) {
+    this.isUpdating = true
+
+    return UserService.deleteUser(userUuid)
+      .then(
+        action(() => {
+          this.forgetUser
+          this.rootStore.authStore.logout
         })
       )
       .catch(
