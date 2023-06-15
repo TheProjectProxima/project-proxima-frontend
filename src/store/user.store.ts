@@ -92,28 +92,28 @@ export class UserStore {
     this.isUpdating = true;
     this.error = undefined;
 
-    return UserService.updateUser(userUuid, newUser)
+    UserService.updateUser(userUuid, newUser)
       .then(
-        action(({user}) => {
-          this.user = user;
-        })
+        (res) => {
+          const {user} = res
+          this.setUser(user)
+        }
       )
       .catch(
-        action((err) => {
-          console.error(err);
+        (error) => {
+          console.error(error);
 
-          if (err?.response?.body) {
-            this.error = err?.response?.body;
+          if (error?.response?.body) {
+            this.error = error.response.body;
           }
 
-          throw err;
-        })
+          throw error;
+        }
       )
-      .finally(
-        action(() => {
-          this.isUpdating = false;
-        })
-      );
+      .finally(() => {
+        this.isUpdating = false
+      }
+      )
   }
 
   deleteUser(userUuid: string) {
@@ -144,7 +144,6 @@ export class UserStore {
       );
   }
 
-  
   forgetUser() {
     this.setUser({
       userId: '',

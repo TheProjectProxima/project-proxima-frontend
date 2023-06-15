@@ -9,7 +9,7 @@ export default {
   getAllUsers: (): Promise<User[]> =>
     requests.get('/users'),
   updateUser: (uuid: string, updatedUser: User): Promise<ResponseUser> =>
-    requests.put(`/users/${uuid}`, { user: updatedUser }),
+    requests.put(`/users/${uuid}`, updatedUser),
   deleteUser: (uuid: string): Promise<void> =>
     requests.delete(`/users/${uuid}`),
   getUserProfileImages: (uuid: string) : Promise<Image[]> => 
