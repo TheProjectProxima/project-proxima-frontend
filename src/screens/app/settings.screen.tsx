@@ -6,6 +6,7 @@ import { UserStore } from '../../store/user.store';
 import { Button, Dialog, Portal } from 'react-native-paper';
 import MessageDialog from '../../components/MessageDialog/MessageDialog';
 import { User } from '../../lib/types/model';
+import { UpdateUser } from '../../lib/types/request';
 
 
 
@@ -41,14 +42,14 @@ export const SettingsScreen = ({ navigation }: {navigation:any}) => {
     userStore.deleteUser(user.userId)
   }
 
-  const handleUserUpdate = (updatedUser : User) => {
+  const handleUserUpdate = (updatedUser : UpdateUser) => {
     userStore.updateUser(user.userId, updatedUser)
   }
 
   const handlePasswordChange = () => {
-    const newUser = {...user}
+
     if (currentPassword === user.password && newPassword === confirmPassword) {
-      newUser.password = newPassword
+      const newUser = {password: newPassword}
       handleUserUpdate(newUser)
       setDialogMessage('Updated Password Successfully')
       showAndHideDialog()
@@ -61,8 +62,7 @@ export const SettingsScreen = ({ navigation }: {navigation:any}) => {
 
   const handleEmailChange = () => {
     try {
-      const newUser = {...user}
-    newUser.email = newEmail
+    const newUser = {email: newEmail}
     handleUserUpdate(newUser)
     setDialogMessage('Updated Email Successfully')
     showAndHideDialog()

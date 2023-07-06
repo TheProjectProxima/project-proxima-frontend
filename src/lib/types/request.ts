@@ -14,7 +14,12 @@ export type LoginUser = {
     password: string,
     phoneNumber: string, 
   };
-  
+
+  export type UpdateUser = {
+    password?: string, 
+    email?: string, 
+  }
+
   export type ResponseUser = {
     user: User;
   };
