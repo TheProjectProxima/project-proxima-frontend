@@ -1,62 +1,38 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View, Text,} from 'react-native';
 import SearchBar from '../../components/shared/searchBar';
 import { User } from '../../lib/types/model';
 import UserCard from '../../components/UserCard/UserCard';
 import { UserAccount } from '../../types/types';
+import { observer } from 'mobx-react';
+import { useStore } from '../../store/index.store';
 
 
 
-export const FriendsScreen = ({ navigation }: {navigation:any}) => {
+export const FriendsScreen = observer(({ navigation }: {navigation:any}) => {
+  const rooteStore = useStore()
+  const userStore = rooteStore.userStore
+  const user = userStore.user
+  const authStore = rooteStore.authStore
+  const linkStore = rooteStore.linkStore
+  const friendStore = rooteStore.friendStore
 
-  const users : UserAccount[] = [
-       {
-        user_id: "1234",
-        user_name: "User1",
-        first_name: "Joe",
-        last_name: "Doe",
-        email: "joe@test.com",
-        phone_number: "8573997708",
-        password: "12324",
-        is_active: false, 
-        groups: [],
-       },
-       {
-        user_id: "1111",
-        user_name: "User2",
-        first_name: "Joe",
-        last_name: "Doe",
-        email: "joe@test.com",
-        phone_number: "8573997708",
-        password: "12324",
-        is_active: false, 
-        groups: [],
-       },
-       {
-        user_id: "1234",
-        user_name: "User3",
-        first_name: "Joe",
-        last_name: "Doe",
-        email: "joe@test.com",
-        phone_number: "8573997708",
-        password: "12324",
-        is_active: false, 
-        groups: [],
-       },
-
-  ]
-
+  useEffect(() => {
+    friendStore.fetchUserFriends()
+  })
+  
+  
   return (
     <View>
-        <Text>Friends</Text>
         <SearchBar/>
         {
-          users.map((user: UserAccount) => (
-            <UserCard user={user}  key={user.user_id}/>
-          ))
-        }
-
+        Array.from(friendStore.friendsMap).map(([friendId, friend]) => (
+      <UserCard
+        user={friend.friend}
+        key={friendId}
+      />
+    ))}
     </View>
   );
-};
+})
 

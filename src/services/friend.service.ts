@@ -10,7 +10,7 @@ export default {
   deleteFriend: (uuid: string): Promise<void> =>
     requests.delete(`/friend/${uuid}`),
   createFriend: (friend: Friend) : Promise<Friend[]> => 
-  requests.post('/friend', {friend})  ,
+  requests.post('/friend/', {friend})  ,
   getUserFriends: (uuid: string): Promise<Friend[]> =>
   requests.get(`/friend/user/${uuid}`),
 };
