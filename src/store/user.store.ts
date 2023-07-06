@@ -125,7 +125,7 @@ export class UserStore {
       .then(
         action(() => {
           this.forgetUser
-          this.rootStore.authStore.logout
+          this.rootStore.authStore.logout()
         })
       )
       .catch(
