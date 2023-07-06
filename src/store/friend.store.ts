@@ -16,6 +16,10 @@ export class FriendStore {
     makeAutoObservable(this);
   }
 
+  friendCount() {
+    return this.friendsMap.size
+  }
+
   fetchUserFriends() {
     this.isLoadingFriend = true;
     this.friendError = undefined;

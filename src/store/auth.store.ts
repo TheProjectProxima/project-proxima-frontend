@@ -1,10 +1,7 @@
-import {action, makeAutoObservable} from 'mobx';
+import { makeAutoObservable} from 'mobx';
 
 import { RootStore} from './index.store';
 import {AuthService} from '../services/index.service';
-
-import { AuthUser } from '../lib/types/service';
-import { UserStore } from './user.store';
 import { LoginUser, SignUpUser } from '../lib/types/request';
 
 enum RequestType {
@@ -69,7 +66,6 @@ export class AuthStore {
     this.lastName = lastName;
   }
 
-
   login() {
     const data : LoginUser = {
       userName: this.userName,
@@ -79,7 +75,6 @@ export class AuthStore {
     AuthService.login(data).then(
       (res) => {
         const {user} = res
-        console.log(user)
         this.rootStore.userStore.setUser(user)
         this.setIsAuthenticated(true)
         this.clear()
@@ -108,7 +103,6 @@ export class AuthStore {
       (res) => {
         const {user} = res
         this.rootStore.userStore.setUser(user)
-        console.log(this.rootStore.userStore.user)
         this.setIsAuthenticated(true)
         this.clear()
       }
@@ -126,10 +120,5 @@ export class AuthStore {
     this.rootStore.userStore.forgetUser()
     this.clear()
     this.isAuthenticated = false
-    // also clear:
-    // groups
-    // friends 
-    // images
-    // profile images
   }
 }

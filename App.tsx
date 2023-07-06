@@ -9,6 +9,7 @@ import AppLoading from 'expo-app-loading';
 import { ThemeProvider } from 'styled-components/native';
 import { theme } from './src/theme';
 import { StoreProvider, rootStore } from './src/store/index.store';
+import { Provider as PaperProvider } from 'react-native-paper';
 import React from 'react';
 
 
@@ -23,12 +24,14 @@ export default function App() {
   else {
     return (
       <StoreProvider value={rootStore}>
-      <ThemeProvider theme={theme}>
+        <PaperProvider>
+        <ThemeProvider theme={theme}>
         <SafeAreaProvider>
           <PicLinkNavigation/>
         </SafeAreaProvider>
       </ThemeProvider>
-      </StoreProvider>  
+        </PaperProvider>
+      </StoreProvider> 
     ); 
   }
 }

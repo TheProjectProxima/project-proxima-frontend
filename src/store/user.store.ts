@@ -6,6 +6,8 @@ import {UserService} from '../services/index.service';
 
 import {User} from '../lib/types/model';
 import { RootStore } from './index.store';
+import { AuthStore } from './auth.store';
+import { UpdateUser } from '../lib/types/request';
 
 const cache = new Cache({
   namespace: 'proximaApp',
@@ -87,14 +89,43 @@ export class UserStore {
     
   }
 
-  updateUser(userUuid: string, newUser: User) {
+  updateUser(userUuid: string, newUser: UpdateUser) {
     this.isUpdating = true;
     this.error = undefined;
+    console.log(newUser)
 
-    return UserService.updateUser(userUuid, newUser)
+    UserService.updateUser(userUuid, newUser)
       .then(
-        action(({user}) => {
-          this.user = user;
+        (res) => {
+          const {user} = res
+          this.setUser(user)
+        }
+      )
+      .catch(
+        (error) => {
+          console.error(error);
+
+          if (error?.response?.body) {
+            this.error = error.response.body;
+          }
+
+          throw error;
+        }
+      )
+      .finally(() => {
+        this.isUpdating = false
+      }
+      )
+  }
+
+  deleteUser(userUuid: string) {
+    this.isUpdating = true
+
+    return UserService.deleteUser(userUuid)
+      .then(
+        action(() => {
+          this.forgetUser
+          this.rootStore.authStore.logout()
         })
       )
       .catch(
@@ -115,7 +146,6 @@ export class UserStore {
       );
   }
 
-  
   forgetUser() {
     this.setUser({
       userId: '',

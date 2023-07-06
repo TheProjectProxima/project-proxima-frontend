@@ -27,4 +27,8 @@ export const colors = {
         success: '#138000',
         black: "#0000000",
     },
+    common : {
+        black: "#000000",
+
+    }
 };

@@ -14,6 +14,7 @@ export type User = {
     updatedAt?: Date, 
     createdAt?: Date,
     deletedAt?: Date,
+    profileImage?: string,
 }
 
 

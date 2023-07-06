@@ -64,6 +64,10 @@ const requests = {
       .post(`${API_URI}${url}`, body)
       .then((response) => response.data)
       .catch(handleErrors),
-};
+  patch: (url, body) =>
+    api
+    .patch(`${API_URI}${url}`, body)
+    .then((response) => response.data)
+    .catch(handleErrors),};
 
 export default requests;
