@@ -40,15 +40,24 @@ export type ProfileImage = {
     user? : User
 }
 
+export type UserRedacted = {
+    userId: string, 
+    userName: string, 
+    firstName: string, 
+    lastName: string, 
+    createdAt: Date,
+    updatedAt: Date, 
+    isActive: boolean,
+}
+
 export type Friend = {
-    user: User,
     userId: string,
-    friend: User,
+    friend: UserRedacted,
     friendId: string,
     uniqueId: string,
     requested: Boolean,
     accepted: Boolean,
-    requested_at?: Date,
-    last_linked: Date,
-    deleted_at: Date
+    requestedAt?: Date,
+    lastLinked: Date,
+    deletedAt: Date
   }

@@ -3,10 +3,10 @@ import { View, Text } from 'react-native';
 import { StyledCard, StyledCompactCard } from '../../styles/common.styles';
 import { GroupLink, UserAccount } from '../../types/types';
 import { Card } from 'react-native-paper';
-import { User } from '../../lib/types/model';
+import { User, UserRedacted } from '../../lib/types/model';
 
 type UserCardProps = {
-  user: User
+  user: UserRedacted
   last_linked?: Date
 }
 
@@ -19,7 +19,7 @@ const UserCard = ({user, last_linked}: UserCardProps) => {
   // Will have to add friend functionality to this. 
 
   return (
-    <StyledCard elevation={2}>
+    <Card elevation={2}>
       <View>
       <Text>
       {"Image here"}
@@ -32,7 +32,7 @@ const UserCard = ({user, last_linked}: UserCardProps) => {
       {/* <View>
         {last_linked.toDateString()}
       </View> */}
-    </StyledCard>
+    </Card>
   );
 };
 

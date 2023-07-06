@@ -35,7 +35,8 @@ export class FriendStore {
         this.friendError = err.response && err.response.body && err.response.body.errors;
         throw err;
       }))
-      .finally(action(() => { this.isLoadingFriend = false; }));
+      .finally(action(() => {       console.log(this.friendsMap);
+        this.isLoadingFriend = false; }));
   }
 
   loadFriend(friendId: string) {
